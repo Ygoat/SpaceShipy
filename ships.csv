@@ -1,2 +1,2 @@
 sx,sy,wx1,wy1,wx2,wy2,attack,speed,defence,special_id
-100,300,0,0,
+100,300,-100,100,100,100,100,100,100,1
