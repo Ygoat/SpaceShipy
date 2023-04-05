@@ -1,6 +1,7 @@
 import pygame
-from pygame.locals import *
 import sys
+from space_ship import SpaceShip
+from pygame.locals import *
 
 def main():
 
@@ -9,8 +10,8 @@ def main():
     screen = pygame.display.set_mode((600, 400))
     SCREEN = screen.get_rect()
     pygame.display.set_caption('Hello World')
-
     clock = pygame.time.Clock()
+    space_ship = SpaceShip()
 
     # 登場する人/物/背景の作成
     circ_sur = pygame.Surface((20, 20))
@@ -24,7 +25,7 @@ def main():
     line_sur = pygame.Surface((100, 50))
     line_sur.set_colorkey((0, 0, 0))
     pygame.draw.line(line_sur, (0, 255, 0), (0, 0), (100, 50))
-    
+    space_ship.create()
 
     
     while True:
@@ -44,7 +45,7 @@ def main():
         screen.blit(rect_sur,(150, 150))
         screen.blit(circ_sur,circ_rect.topleft)
         screen.blit(line_sur,(250, 250))
-        
+        screen.blit(space_ship.sur,(100,200))
         # 画面(screen)の実表示
         pygame.display.update()
 
@@ -60,37 +61,8 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-class SpaceShip():
     
-    def __init__(self,
-                 shpae:list,
-                 weapon_place:list,
-                 speed:float,
-                 attack:float,
-                 defence:float,
-                 special_id:int,
-                 level_max:int):
-        # ここにCSVをインポートする
-        self.shape = shpae
-        self.weapon_place = weapon_place
-        self.speed = speed
-        self.attack = attack
-        self.defence = defence
-        self.special_id = special_id
-        self.level_max = level_max
-        self.level_now = 0
-        self.width = 1
-        
-    def show(self):
-        pygame.draw.rect()
-        
-    def create(self,width:float,height:float,color:int=(0,0,0)):
-        ship_sur = pygame.Surface((width, height))
-        pygame.draw.rect(ship_sur,color,(0, 0, width, height))
-    
-class  ShipeClue():
+class  ShipClue():
     attack:float = 0.0
     defence:float = 0.0
     speed:float = 0.0
