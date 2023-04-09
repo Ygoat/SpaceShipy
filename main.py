@@ -13,6 +13,7 @@ def main():
     SCREEN = screen.get_rect()
     pygame.display.set_caption('Space Shipy')
     clock = pygame.time.Clock()
+
     space_ship = SpaceShip()
     ship_clue = ShipClue()
     ship_weapon = ShipWeapon(space_ship)
@@ -53,6 +54,7 @@ def main():
         screen.blit(ship_weapon.sight_sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
         
         # 画面(screen)の実表示
+
         pygame.display.update()
 
         # イベント処理
