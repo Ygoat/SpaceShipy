@@ -1,17 +1,21 @@
 import pygame
 import sys
 from space_ship import SpaceShip
+from ship_clue import ShipClue
+from ship_weapon import ShipWeapon
 from pygame.locals import *
 
 def main():
 
     # 初期設定
     pygame.init()
-    screen = pygame.display.set_mode((600, 400))
+    screen = pygame.display.set_mode((700, 1000))
     SCREEN = screen.get_rect()
-    pygame.display.set_caption('Hello World')
+    pygame.display.set_caption('Space Shipy')
     clock = pygame.time.Clock()
     space_ship = SpaceShip()
+    ship_clue = ShipClue()
+    ship_weapon = ShipWeapon(space_ship)
 
     # 登場する人/物/背景の作成
     circ_sur = pygame.Surface((20, 20))
@@ -22,14 +26,13 @@ def main():
     pygame.draw.circle(circ_sur, (255, 255, 255), (10, 10), 10)
     rect_sur = pygame.Surface((100, 60))
     pygame.draw.rect(rect_sur, (255, 0, 0), (0, 0, 100, 60))
-    line_sur = pygame.Surface((100, 50))
-    line_sur.set_colorkey((0, 0, 0))
-    pygame.draw.line(line_sur, (0, 255, 0), (0, 0), (100, 50))
-    space_ship.create()
 
-    
+    ship_clue.create()
+    space_ship.create()
+    ship_weapon.create()
+    ship_weapon.weapon_sight()
+
     while True:
-        
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
 
@@ -42,10 +45,13 @@ def main():
         circ_rect.clamp_ip(SCREEN)
 
         # 画面(screen)上に登場する人/物/背景を描画
-        screen.blit(rect_sur,(150, 150))
         screen.blit(circ_sur,circ_rect.topleft)
-        screen.blit(line_sur,(250, 250))
-        screen.blit(space_ship.sur,(100,200))
+        space_center_pos = space_ship.sur.get_rect().center        
+        screen.blit(space_ship.sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
+        screen.blit(ship_clue.sur,(100,200))
+        screen.blit(ship_weapon.sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
+        screen.blit(ship_weapon.sight_sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
+        
         # 画面(screen)の実表示
         pygame.display.update()
 
@@ -60,11 +66,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    
-class  ShipClue():
-    attack:float = 0.0
-    defence:float = 0.0
-    speed:float = 0.0
-    pattern:int = 0
-    special_id:int = 0
