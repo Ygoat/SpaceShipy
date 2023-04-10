@@ -15,37 +15,32 @@ class ShipWeapon():
         self.bullet_speed = float(param['bullet_speed'])
         self.bullet_type = int(param['bullet_type'])
         self.space_ship = space_ship
+        self.pos_id = pos_id
         
     def create(self,color:int=(255,0,0)) -> None:
+        # 武器の図形作成
         self.sur = pygame.Surface((20,20))
         self.sur.set_colorkey((0, 0, 0))
         pygame.draw.circle(self.sur,color,(10, 10),radius=10)
 
     def weapon_sight(self,color:int=(255,0,0))  -> None:
-        ship = self.space_ship
-        center = tuple(map(float,(ship.sur.get_rect().center)))
+        # 武器の照準
         self.sight_sur = pygame.Surface((200, 200))
         self.sight_sur.set_colorkey((0, 0, 0))
-        print(ship.weapon_pos[0][1],center[1])
+        sight_vector = standard_sight_vector_line(self.space_ship.weapon_pos[self.pos_id],self.space_ship.sur.get_rect().center,self.sight_sur)
 
-        sight_vector = sight_vector_line(ship.weapon_pos,ship.sur.get_rect().center,self.sight_sur)
-
-        # sight_vector = (-(ship.weapon_pos[0][0] - center[0]), -(ship.weapon_pos[0][1] - center[1]))
         pygame.draw.line(self.sight_sur, color, sight_vector[0], sight_vector[1])
         
-def sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple:
-    # x_judge = weapon_pos[0] - ship_center[0] >= 0
-    # y_judge = weapon_pos[1] - ship_center[1] >= 0
+
+def standard_sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple:
+    # 基準となる武器の照準線のベクトル作成
     sight_sur_rec = sight_sur.get_rect()
-        
     sight_vector_start = sight_sur_rec.center
-    ship_center
-    ship_center2weapon_pos = pygame.math.Vector2(weapon_pos[0][0] - ship_center[0], weapon_pos[0][1] - ship_center[1])
+    
+    ship_center2weapon_pos = pygame.math.Vector2(weapon_pos[0] - ship_center[0], weapon_pos[1] - ship_center[1])
     ship_center2weapon_pos.scale_to_length(100)
     
     sight_vector_end = ( sight_sur_rec.center[0] + ship_center2weapon_pos.x ,sight_sur_rec.center[1] + ship_center2weapon_pos.y  ) 
-
-    # vector1=pygame.math.Vector2(0,1)
-    # vector2=pygame.math.Vector2(1,0).dot(vector1)
-    print(sight_vector_start,sight_vector_end)        
+       
     return sight_vector_start,sight_vector_end
+
