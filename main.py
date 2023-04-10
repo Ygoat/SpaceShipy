@@ -9,7 +9,7 @@ def main():
 
     # 初期設定
     pygame.init()
-    screen = pygame.display.set_mode((700, 1000))
+    screen = pygame.display.set_mode((650, 900))
     SCREEN = screen.get_rect()
     pygame.display.set_caption('Space Shipy')
     clock = pygame.time.Clock()
@@ -51,7 +51,7 @@ def main():
         screen.blit(space_ship.sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
         screen.blit(ship_clue.sur,(100,200))
         screen.blit(ship_weapon.sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
-        screen.blit(ship_weapon.sight_sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
+        screen.blit(ship_weapon.sight_sur,(350 - space_center_pos[0] - ship_weapon.sight_sur.get_rect().center[0],500 - space_center_pos[1] - ship_weapon.sight_sur.get_rect().center[1]))
         
         # 画面(screen)の実表示
 
