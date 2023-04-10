@@ -9,7 +9,8 @@ class SpaceShip():
     def __init__(self,id:int=0) -> None:
         # パラメーターのセット
         param = self.params[id]
-        self.shape = tuple(map(float,(param['sx'],param['sy'])))
+        print(param)
+        self.shape = (float(param['sx']),float(param['sy']))
         self.weapon_pos = [(float(param['wx1']),float(param['wy1'])),(float(param['wx2']),float(param['wy2']))]
         self.speed = float(param['speed'])
         self.attack = float(param['attack'])

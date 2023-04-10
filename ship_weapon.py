@@ -28,18 +28,24 @@ class ShipWeapon():
         self.sight_sur.set_colorkey((0, 0, 0))
         print(ship.weapon_pos[0][1],center[1])
 
-        sight_vector = (-(ship.weapon_pos[0][0] - center[0]), -(ship.weapon_pos[0][1] - center[1]))
-        pygame.draw.line(self.sight_sur, color, (0, 0), sight_vector)
+        sight_vector = sight_vector_line(ship.weapon_pos,ship.sur.get_rect().center,self.sight_sur)
+
+        # sight_vector = (-(ship.weapon_pos[0][0] - center[0]), -(ship.weapon_pos[0][1] - center[1]))
+        pygame.draw.line(self.sight_sur, color, sight_vector[0], sight_vector[1])
         
 def sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple:
-    x_judge = weapon_pos[0] - ship_center[0] >= 0
-    y_judge = weapon_pos[1] - ship_center[1] >= 0
+    # x_judge = weapon_pos[0] - ship_center[0] >= 0
+    # y_judge = weapon_pos[1] - ship_center[1] >= 0
     sight_sur_rec = sight_sur.get_rect()
         
     sight_vector_start = sight_sur_rec.center
-    sight_vector_end = (-(weapon_pos[0] - sight_sur_rec.center[0]), -(weapon_pos[1] - sight_sur_rec.center[1]))
-        
-    vector1=pygame.math.Vector2(0,1)
-    vector2=pygame.math.Vector2(1,0).dot(vector1)
-    print(vector2)        
+    ship_center
+    ship_center2weapon_pos = pygame.math.Vector2(weapon_pos[0][0] - ship_center[0], weapon_pos[0][1] - ship_center[1])
+    ship_center2weapon_pos.scale_to_length(100)
+    
+    sight_vector_end = ( sight_sur_rec.center[0] + ship_center2weapon_pos.x ,sight_sur_rec.center[1] + ship_center2weapon_pos.y  ) 
+
+    # vector1=pygame.math.Vector2(0,1)
+    # vector2=pygame.math.Vector2(1,0).dot(vector1)
+    print(sight_vector_start,sight_vector_end)        
     return sight_vector_start,sight_vector_end
