@@ -1,5 +1,6 @@
 import pygame
 import csv
+MAX_NUM_OF_WEAPON = 5
 
 class SpaceShip():
     # パラメーターのインポート
@@ -9,9 +10,8 @@ class SpaceShip():
     def __init__(self,id:int=0) -> None:
         # パラメーターのセット
         param = self.params[id]
-        print(param)
         self.shape = (float(param['sx']),float(param['sy']))
-        self.weapon_pos = [(float(param['wx1']),float(param['wy1'])),(float(param['wx2']),float(param['wy2']))]
+        self.weapon_pos = [(float(param[f'wx{i}']),float(param[f'wy{i}'])) for i in range(1,MAX_NUM_OF_WEAPON+1)]
         self.speed = float(param['speed'])
         self.attack = float(param['attack'])
         self.defence = float(param['defence'])
@@ -20,6 +20,7 @@ class SpaceShip():
         self.level_now = 0
         
     def create(self,color:int=(0,255,0)) -> None:
+        # 宇宙船の図形作成
         self.sur = pygame.Surface(self.shape)
         self.sur.set_colorkey((0, 0, 0))
         pygame.draw.rect(self.sur,color,(0, 0, self.shape[0], self.shape[1]))

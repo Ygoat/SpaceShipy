@@ -4,25 +4,30 @@ from space_ship import SpaceShip
 from ship_clue import ShipClue
 from ship_weapon import ShipWeapon
 from pygame.locals import *
+MAX_NUM_OF_WEAPON = 5
 
 def main():
 
     # 初期設定
     pygame.init()
-    screen = pygame.display.set_mode((650, 900))
-    SCREEN = screen.get_rect()
     pygame.display.set_caption('Space Shipy')
     clock = pygame.time.Clock()
+    
+    screen = pygame.display.set_mode((750, 1000))
+    SCREEN = screen.get_rect()
+    SCREEN_CENTER = SCREEN.center
 
     space_ship = SpaceShip()
+    space_ship.create()
+    SHIP_RECT = space_ship.sur.get_rect()
+    
     ship_clue = ShipClue()
-    ship_weapon = ShipWeapon(space_ship)
-
+    ship_weapon = [ShipWeapon(space_ship,pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON) ]
     # 登場する人/物/背景の作成
     circ_sur = pygame.Surface((20, 20))
     circ_sur.set_colorkey((0, 0, 0))
     circ_rect = circ_sur.get_rect()
-    circ_rect.topleft = (300, 150)
+    circ_rect.topleft = (300, 100)
     dx, dy = 5, 4
     pygame.draw.circle(circ_sur, (255, 255, 255), (10, 10), 10)
     rect_sur = pygame.Surface((100, 60))
@@ -30,8 +35,8 @@ def main():
 
     ship_clue.create()
     space_ship.create()
-    ship_weapon.create()
-    ship_weapon.weapon_sight()
+    [ship_weapon[i].create() for i in range(0,MAX_NUM_OF_WEAPON)]
+    [ship_weapon[i].weapon_sight() for i in range(0,MAX_NUM_OF_WEAPON)]
 
     while True:
         # 画面(screen)をクリア
@@ -43,15 +48,19 @@ def main():
             dx = -dx
         if circ_rect.top < SCREEN.top or circ_rect.bottom > SCREEN.bottom:
             dy = -dy
+        if (circ_rect.left < SCREEN.centerx + SHIP_RECT.centerx and circ_rect.right > SCREEN.centerx - SHIP_RECT.centerx) and (circ_rect.top < SCREEN.centery + SHIP_RECT.centery and circ_rect.bottom > SCREEN.centery - SHIP_RECT.centery): 
+            dx = -dx            
+        if (circ_rect.left < SCREEN.centerx + SHIP_RECT.centerx and circ_rect.right > SCREEN.centerx - SHIP_RECT.centerx) and (circ_rect.top < SCREEN.centery + SHIP_RECT.centery and circ_rect.bottom > SCREEN.centery - SHIP_RECT.centery): 
+            dy = -dy            
         circ_rect.clamp_ip(SCREEN)
 
         # 画面(screen)上に登場する人/物/背景を描画
         screen.blit(circ_sur,circ_rect.topleft)
         space_center_pos = space_ship.sur.get_rect().center        
-        screen.blit(space_ship.sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
+        screen.blit(space_ship.sur,(SCREEN_CENTER[0] - space_center_pos[0],SCREEN_CENTER[1] - space_center_pos[1]))
         screen.blit(ship_clue.sur,(100,200))
-        screen.blit(ship_weapon.sur,(350 - space_center_pos[0],500 - space_center_pos[1]))
-        screen.blit(ship_weapon.sight_sur,(350 - space_center_pos[0] - ship_weapon.sight_sur.get_rect().center[0],500 - space_center_pos[1] - ship_weapon.sight_sur.get_rect().center[1]))
+        [screen.blit(ship_weapon[i].sur,(SCREEN_CENTER[0] + space_ship.weapon_pos[i][0] - ship_weapon[i].sur.get_rect().center[0] - space_center_pos[0],SCREEN_CENTER[1] + space_ship.weapon_pos[i][1] - ship_weapon[i].sur.get_rect().center[1] - space_center_pos[1])) for i in range(0,MAX_NUM_OF_WEAPON)]
+        [screen.blit(ship_weapon[i].sight_sur,(SCREEN_CENTER[0] + space_ship.weapon_pos[i][0] - space_center_pos[0] - ship_weapon[i].sight_sur.get_rect().center[0],SCREEN_CENTER[1] + space_ship.weapon_pos[i][1] - space_center_pos[1] - ship_weapon[i].sight_sur.get_rect().center[1])) for i in range(0,MAX_NUM_OF_WEAPON)]
         
         # 画面(screen)の実表示
 
