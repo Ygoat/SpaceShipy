@@ -27,19 +27,21 @@ class ShipWeapon():
         # 武器の照準
         self.sight_sur = pygame.Surface((200, 200))
         self.sight_sur.set_colorkey((0, 0, 0))
-        sight_vector = standard_sight_vector_line(self.space_ship.weapon_pos[self.pos_id],self.space_ship.sur.get_rect().center,self.sight_sur)
-
-        pygame.draw.line(self.sight_sur, color, sight_vector[0], sight_vector[1])
+        
+        self.sight_vector = standard_sight_vector_line(self.space_ship.weapon_pos[self.pos_id],self.space_ship.sur.get_rect().center,self.sight_sur)
+        
+        
+        pygame.draw.line(self.sight_sur, color, self.sight_vector[0], self.sight_vector[1])
         
 
-def standard_sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple[float,...]:
+def standard_sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple[(float,float),(float,float)]:
     # 基準となる武器の照準線のベクトル作成
     sight_sur_rec = sight_sur.get_rect()
     sight_vector_start = sight_sur_rec.center
     
     ship_center2weapon_pos = pygame.math.Vector2(weapon_pos[0] - ship_center[0], weapon_pos[1] - ship_center[1])
     ship_center2weapon_pos.scale_to_length(100)
-    
+
     sight_vector_end = ( sight_sur_rec.center[0] + ship_center2weapon_pos.x ,sight_sur_rec.center[1] + ship_center2weapon_pos.y  ) 
        
     return sight_vector_start,sight_vector_end
