@@ -3,6 +3,7 @@ import sys
 from space_ship import SpaceShip
 from ship_clue import ShipClue
 from ship_weapon import ShipWeapon
+from weapon_bullet import WeaponBullet
 from pygame.locals import *
 MAX_NUM_OF_WEAPON = 5
 
@@ -38,6 +39,12 @@ def main():
     [ship_weapon[i].create() for i in range(0,MAX_NUM_OF_WEAPON)]
     [ship_weapon[i].weapon_sight() for i in range(0,MAX_NUM_OF_WEAPON)]
 
+    
+    # ---------------bullet--------------------------------------------------
+    weapon_bullet = WeaponBullet(ship_weapon=ship_weapon[0])
+    weapon_bullet.create()
+    # ---------------bullet--------------------------------------------------    
+    
     while True:
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
@@ -61,7 +68,11 @@ def main():
         screen.blit(ship_clue.sur,(100,200))
         [screen.blit(ship_weapon[i].sur,(SCREEN_CENTER[0] + space_ship.weapon_pos[i][0] - ship_weapon[i].sur.get_rect().center[0] - space_center_pos[0],SCREEN_CENTER[1] + space_ship.weapon_pos[i][1] - ship_weapon[i].sur.get_rect().center[1] - space_center_pos[1])) for i in range(0,MAX_NUM_OF_WEAPON)]
         [screen.blit(ship_weapon[i].sight_sur,(SCREEN_CENTER[0] + space_ship.weapon_pos[i][0] - space_center_pos[0] - ship_weapon[i].sight_sur.get_rect().center[0],SCREEN_CENTER[1] + space_ship.weapon_pos[i][1] - space_center_pos[1] - ship_weapon[i].sight_sur.get_rect().center[1])) for i in range(0,MAX_NUM_OF_WEAPON)]
-        
+
+    # ---------------bullet--------------------------------------------------        
+        weapon_bullet.set()
+        weapon_bullet.move(screen)      
+    # ---------------bullet--------------------------------------------------        
         # 画面(screen)の実表示
 
         pygame.display.update()
