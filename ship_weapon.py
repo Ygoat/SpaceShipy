@@ -32,7 +32,7 @@ class ShipWeapon():
         pygame.draw.line(self.sight_sur, color, sight_vector[0], sight_vector[1])
         
 
-def standard_sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple:
+def standard_sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple[float,...]:
     # 基準となる武器の照準線のベクトル作成
     sight_sur_rec = sight_sur.get_rect()
     sight_vector_start = sight_sur_rec.center
