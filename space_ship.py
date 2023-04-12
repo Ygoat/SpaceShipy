@@ -25,5 +25,7 @@ class SpaceShip():
         self.sur.set_colorkey((0, 0, 0))
         pygame.draw.rect(self.sur,color,(0, 0, self.shape[0], self.shape[1]))
 
+    def show(self,screen:pygame.Surface):
+        screen.blit(self.sur,(screen.get_rect().center[0] - self.sur.get_rect().center[0],screen.get_rect().center[1] - self.sur.get_rect().center[1]))
         
         

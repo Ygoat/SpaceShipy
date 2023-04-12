@@ -21,5 +21,5 @@ class ShipClue():
         self.sur.set_colorkey((0, 0, 0))
         pygame.draw.circle(self.sur,color,(self.shape[0]/2, self.shape[1]/2),radius=self.shape[0]/2)
 
-    def movement(self):
+    def movement(self,screen:pygame.Surface):
         return 0
