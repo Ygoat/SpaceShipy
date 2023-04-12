@@ -24,7 +24,9 @@ class ShipWeapon():
         pygame.draw.circle(self.sur,color,(10, 10),radius=10)
 
     def show(self,screen:pygame.Surface,ship_center:tuple[float,float],ship_weapon_pos:tuple[float,float]):
-        screen.blit(self.sur,(screen.get_rect().center[0] + ship_weapon_pos[0] - self.sur.get_rect().center[0] - ship_center[0],screen.get_rect().center[1] + ship_weapon_pos[1] - self.sur.get_rect().center[1] - ship_center[1]))
+        self.grobal_position_x = screen.get_rect().center[0] + ship_weapon_pos[0] - self.sur.get_rect().center[0] - ship_center[0]
+        self.grobal_position_y = screen.get_rect().center[1] + ship_weapon_pos[1] - self.sur.get_rect().center[1] - ship_center[1]
+        screen.blit(self.sur,(self.grobal_position_x, self.grobal_position_y))
 
     def weapon_sight(self,color:int=(255,0,0))  -> None:
         # 武器の照準
