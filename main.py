@@ -45,13 +45,14 @@ def main():
     [ship_weapon[i].weapon_sight() for i in range(0,MAX_NUM_OF_WEAPON)]
 
     # 弾丸作成
-    weapon_bullet = WeaponBullet(ship_weapon=ship_weapon[0])
-    weapon_bullet.create()
+    weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
+    [weapon_bullet[i].create() for i in range(0,MAX_NUM_OF_WEAPON)]
  
     SHIP_RECT = space_ship.sur.get_rect()  
     fpscounter = 0
     while True:
         fpscounter = (fpscounter + 1) % 60  
+        print(fpscounter)
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
 
@@ -76,8 +77,8 @@ def main():
         [screen.blit(ship_weapon[i].sight_sur,(SCREEN_CENTER[0] + space_ship.weapon_pos[i][0] - space_center_pos[0] - ship_weapon[i].sight_sur.get_rect().center[0],SCREEN_CENTER[1] + space_ship.weapon_pos[i][1] - space_center_pos[1] - ship_weapon[i].sight_sur.get_rect().center[1])) for i in range(0,MAX_NUM_OF_WEAPON)]
 
     # ---------------bullet--------------------------------------------------     
-        weapon_bullet.set()
-        weapon_bullet.move(screen)      
+        [weapon_bullet[i].set(time=fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
+        [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]      
     # ---------------bullet--------------------------------------------------        
         # 画面(screen)の実表示
 

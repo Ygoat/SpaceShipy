@@ -2,7 +2,8 @@ import pygame
 import csv
 from ship_weapon import ShipWeapon
 from pygame.locals import *
-MAX_EXIST_BULLET = 3
+MAX_EXIST_BULLET = 500
+BULLET_SPEED_COF = 0.01
 
 class WeaponBullet():
     # パラメーターのインポート
@@ -18,13 +19,12 @@ class WeaponBullet():
         self.penetration = float(param['penetration'])
         self.is_hitscan = bool(param['is_hitscan'])
         self.ship_weapon = ship_weapon
-        self.sight_vector = pygame.math.Vector2(self.ship_weapon.sight_vector[1][0]-self.ship_weapon.sight_vector[0][0],self.ship_weapon.sight_vector[1][1]-self.ship_weapon.sight_vector[0][1]).scale_to_length(100)
-
+        self.sight_vector = pygame.math.Vector2(self.ship_weapon.sight_vector[1][0]-self.ship_weapon.sight_vector[0][0],self.ship_weapon.sight_vector[1][1]-self.ship_weapon.sight_vector[0][1])
         
         # 弾丸格納用配列の作成
         self.bullet_n = 0
-        self.bullet_x =[0]*MAX_EXIST_BULLET
-        self.bullet_y =[0]*MAX_EXIST_BULLET
+        self.global_bullet_x =[0]*MAX_EXIST_BULLET
+        self.global_bullet_y =[0]*MAX_EXIST_BULLET
         self.bullet_flag =[False]*MAX_EXIST_BULLET
         
     def create(self,color:int=(100,200,100)) -> None:
@@ -38,22 +38,22 @@ class WeaponBullet():
         self.hitbox_sur.set_colorkey((0,0,0))
         pygame.draw.rect(self.hitbox_sur,color,(0,0,self.radius*2*0.8,self.radius*2*0.8))
 
-    def set(self,time = 0):
+    def set(self,time:float = 0):
         if time % self.ship_weapon.rate == 0:
             if self.bullet_flag[self.bullet_n] == False:
                 self.bullet_flag[self.bullet_n] = True
-                self.bullet_x[self.bullet_n] = 120 #* self.sight_vector[1]
-                self.bullet_y[self.bullet_n] = 100 #* self.sight_vector[1]
+                self.global_bullet_x[self.bullet_n] = self.ship_weapon.grobal_position_x + self.ship_weapon.sur.get_rect().centerx - self.view_sur.get_rect().centerx
+                self.global_bullet_y[self.bullet_n] = self.ship_weapon.grobal_position_y + self.ship_weapon.sur.get_rect().centery - self.view_sur.get_rect().centery
             self.bullet_n = (self.bullet_n+1)%MAX_EXIST_BULLET
 
 
     def move(self,screen:pygame.Surface):
         for i in range(MAX_EXIST_BULLET):
             if self.bullet_flag[i] == True:
-                self.bullet_x[i] = self.bullet_x[i] - self.ship_weapon.bullet_speed * 0.1#* self.sight_vector[0] 適当に０．１をかけただけ
-                self.bullet_y[i] = self.bullet_y[i] - self.ship_weapon.bullet_speed * 0.1#* self.sight_vector[1] 適当に０．１をかけただけ
-                screen.blit(self.view_sur,(100+self.bullet_x[i],100+self.bullet_y[i])) #適当に100をぷらすしただけ
-                if self.bullet_x[i]<0 or self.bullet_y[i]<0:
+                self.global_bullet_x[i] = self.global_bullet_x[i] + self.ship_weapon.bullet_speed * self.sight_vector[0]*BULLET_SPEED_COF
+                self.global_bullet_y[i] = self.global_bullet_y[i] + self.ship_weapon.bullet_speed * self.sight_vector[1]*BULLET_SPEED_COF
+                screen.blit(self.view_sur,(self.global_bullet_x[i],self.global_bullet_y[i]))
+                if self.global_bullet_x[i]<0 or self.global_bullet_y[i]<0 or self.global_bullet_x[i] > screen.get_rect().right or self.global_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
                 
 
