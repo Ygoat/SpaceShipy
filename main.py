@@ -50,9 +50,9 @@ def main():
 
         # 画面(screen)上に登場する人/物/背景を描画
         screen.blit(circ_sur,circ_rect.topleft)
-        space_center_pos = space_ship.sur.get_rect().center
+
         space_ship.show(screen)
-        screen.blit(ship_clue.sur,(100,200))
+        ship_clue.show(screen)
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         

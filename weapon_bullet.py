@@ -60,4 +60,4 @@ class WeaponBullet():
                 screen.blit(self.view_sur,(self.global_bullet_x[i],self.global_bullet_y[i]))
                 if self.global_bullet_x[i]<0 or self.global_bullet_y[i]<0 or self.global_bullet_x[i] > screen.get_rect().right or self.global_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
-                
+        
