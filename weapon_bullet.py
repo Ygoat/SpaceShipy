@@ -27,7 +27,7 @@ class WeaponBullet():
         self.global_bullet_y =[0]*MAX_EXIST_BULLET
         self.bullet_flag =[False]*MAX_EXIST_BULLET     
         self.spread_cof = 0
-        self.rotated_sight_vector = [(0,0) for i in range(MAX_EXIST_BULLET)]
+        self.spread_bullet_vector = [(0,0) for i in range(MAX_EXIST_BULLET)]
         # 図形とヒットボックス作成
         self.view_sur = pygame.Surface((self.radius*2,self.radius*2))        
         self.hitbox_sur = pygame.Surface((self.radius*2*0.8,self.radius*2*0.8))        
@@ -51,7 +51,7 @@ class WeaponBullet():
                 self.global_bullet_x[self.bullet_n] = self.ship_weapon.grobal_position_x + self.ship_weapon.sur.get_rect().centerx - self.view_sur.get_rect().centerx
                 self.global_bullet_y[self.bullet_n] = self.ship_weapon.grobal_position_y + self.ship_weapon.sur.get_rect().centery - self.view_sur.get_rect().centery
                 self.spread_cof = spread_bullet(self.spread)
-                self.rotated_sight_vector[self.bullet_n] = self.sight_vector.rotate(self.spread_cof)
+                self.spread_bullet_vector[self.bullet_n] = self.sight_vector.rotate(self.spread_cof)
             self.bullet_n = (self.bullet_n+1)%MAX_EXIST_BULLET
 
 
@@ -60,8 +60,8 @@ class WeaponBullet():
         # 弾丸の移動
         for i in range(MAX_EXIST_BULLET):
             if self.bullet_flag[i] == True:
-                self.global_bullet_x[i] = self.global_bullet_x[i] + self.ship_weapon.bullet_speed * self.rotated_sight_vector[i][0]*BULLET_SPEED_COF
-                self.global_bullet_y[i] = self.global_bullet_y[i] + self.ship_weapon.bullet_speed * self.rotated_sight_vector[i][1]*BULLET_SPEED_COF
+                self.global_bullet_x[i] = self.global_bullet_x[i] + self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][0]*BULLET_SPEED_COF
+                self.global_bullet_y[i] = self.global_bullet_y[i] + self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][1]*BULLET_SPEED_COF
                 screen.blit(self.view_sur,(self.global_bullet_x[i],self.global_bullet_y[i]))
                 if self.global_bullet_x[i]<0 or self.global_bullet_y[i]<0 or self.global_bullet_x[i] > screen.get_rect().right or self.global_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
@@ -69,7 +69,6 @@ class WeaponBullet():
 def spread_bullet(param_bullet_spread:float) -> float:
     """add bullet attribution:bullet spread"""
     spread_cof = 0.1*random.randrange(-10,10) * param_bullet_spread
-    # spread_cof_y = 0.01*random.randrange(0,10) * param_bullet_spread
     return spread_cof
 
 def shot_multiple(pos) -> None:
