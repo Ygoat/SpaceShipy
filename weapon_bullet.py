@@ -8,7 +8,7 @@ BULLET_SPEED_COF = 0.01
 
 class WeaponBullet():
     # パラメーターのインポート
-    with open(file='./bullets.csv',mode='r',encoding='utf-8') as params_file:
+    with open(file='./master_data/bullets.csv',mode='r',encoding='utf-8') as params_file:
         params = [row for row in csv.DictReader(params_file)]    
     
     def __init__(self,ship_weapon:ShipWeapon,bullet_id:int=0) -> None:

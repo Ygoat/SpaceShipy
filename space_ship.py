@@ -4,7 +4,7 @@ MAX_NUM_OF_WEAPON = 5
 
 class SpaceShip():
     # パラメーターのインポート
-    with open(file='./ships.csv',mode='r',encoding='utf-8') as params_file:
+    with open(file='./master_data/ships.csv',mode='r',encoding='utf-8') as params_file:
         params = [row for row in csv.DictReader(params_file)]    
     
     def __init__(self,id:int=0) -> None:

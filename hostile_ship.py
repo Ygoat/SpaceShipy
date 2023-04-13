@@ -4,7 +4,7 @@ from weapon_bullet import WeaponBullet
 
 class HostileShip():
     # パラメーターのインポート
-    with open(file='./hostiles.csv',mode='r',encoding='utf-8') as params_file:
+    with open(file='./master_data/hostiles.csv',mode='r',encoding='utf-8') as params_file:
         params = [row for row in csv.DictReader(params_file)]    
     
     def __init__(self,weapon_bullet:WeaponBullet,hostile_id:int=0) -> None:

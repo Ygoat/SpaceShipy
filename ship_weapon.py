@@ -4,7 +4,7 @@ from space_ship import SpaceShip
 
 class ShipWeapon():
     # パラメーターのインポート
-    with open(file='./weapons.csv',mode='r',encoding='utf-8') as params_file:
+    with open(file='./master_data/weapons.csv',mode='r',encoding='utf-8') as params_file:
         params = [row for row in csv.DictReader(params_file)]    
     
     def __init__(self,space_ship:SpaceShip,weapon_id:int=0,pos_id:int=0) -> None:

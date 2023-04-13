@@ -4,7 +4,7 @@ import random
 from ship_weapon import ShipWeapon
 class ShipClue():
     # パラメーターのインポート
-    with open(file='./clues.csv',mode='r',encoding='utf-8') as params_file:
+    with open(file='./master_data/clues.csv',mode='r',encoding='utf-8') as params_file:
         params = [row for row in csv.DictReader(params_file)]
     shape = (10,10)
     
