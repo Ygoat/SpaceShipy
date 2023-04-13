@@ -20,20 +20,22 @@ def main() -> None:
 
     # 登場する人/物/背景の作成
     # 船作成
-    space_ship = SpaceShip()
+    space_ship = SpaceShip(screen)
     # 武器作成 !!!!weapon_idは画面から選択させる予定!!!!
     ship_weapon = [ShipWeapon(space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 弾丸作成　!!!!bullet_idは画面から選択させる予定!!!!
     weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 船員作成
-    ship_clue = ShipClue(ship_weapon)
+    ship_clue = ShipClue(space_ship,ship_weapon)
     # 敵船作成
     hostile_ship = HostileShip(weapon_bullet)
     
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0
+    set_timer:int = 0
     while True:
         fpscounter = (fpscounter + 1) % 60
+        set_timer = (set_timer + 1) % 600 #キャラ移動用のテストタイマー
         
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
@@ -48,7 +50,7 @@ def main() -> None:
         [weapon_bullet[i].set(time=fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
         [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
-        ship_clue.move(screen,fpscounter)
+        ship_clue.move(screen,fpscounter,set_timer)
 
         # 画面(screen)の実表示
         pygame.display.update()

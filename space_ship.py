@@ -7,7 +7,7 @@ class SpaceShip():
     with open(file='./master_data/ships.csv',mode='r',encoding='utf-8') as params_file:
         params = [row for row in csv.DictReader(params_file)]    
     
-    def __init__(self,id:int=0) -> None:
+    def __init__(self,screen:pygame.Surface,id:int=0) -> None:
         # パラメーターのセット
         param = self.params[id]
         self.shape = (float(param['sx']),float(param['sy']))
@@ -21,6 +21,9 @@ class SpaceShip():
         # 図形作成
         self.sur = pygame.Surface(self.shape)        
         self.__create()
+        # 位置情報
+        self.grobal_pos_x = screen.get_rect().centerx - self.sur.get_rect().centerx
+        self.grobal_pos_y = screen.get_rect().centery - self.sur.get_rect().centery
         
     def __create(self,color:int=(0,255,0)) -> None:
         """create space ship shape"""
@@ -31,6 +34,6 @@ class SpaceShip():
     def show(self,screen:pygame.Surface) -> None:
         """show space ship shape"""
         # 宇宙船の表示
-        screen.blit(self.sur,(screen.get_rect().center[0] - self.sur.get_rect().center[0],screen.get_rect().center[1] - self.sur.get_rect().center[1]))
+        screen.blit(self.sur,(self.grobal_pos_x,self.grobal_pos_y))
         
         
