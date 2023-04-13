@@ -1,5 +1,5 @@
 attack,radius,spread,penetration,is_hitscan
-100,2,0,5,0
+100,2,10,5,0
 500,1,0,10,1
 100,3,10,3,0
 1000,5,0,1,0
