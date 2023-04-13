@@ -26,7 +26,6 @@ def main():
     pygame.draw.circle(circ_sur, (255, 255, 255), (10, 10), 10)
     rect_sur = pygame.Surface((100, 60))
     pygame.draw.rect(rect_sur, (255, 0, 0), (0, 0, 100, 60))
-    
     # 船作成
     space_ship = SpaceShip()
     # 船員作成

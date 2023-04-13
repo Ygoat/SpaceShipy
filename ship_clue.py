@@ -14,17 +14,17 @@ class ShipClue():
         self.defence = float(param['defence'])
         self.speed = float(param['speed'])
         self.role_id = int(param['role_id'])
-        
         # 図形の作成
+        self.sur = pygame.Surface(self.shape)
         self.__create()
 
     def __create(self,color:int=(0,0,255)) -> None:
         # 乗組員の図形作成
-        self.sur = pygame.Surface(self.shape)
         self.sur.set_colorkey((0, 0, 0))
         pygame.draw.circle(self.sur,color,(self.shape[0]/2, self.shape[1]/2),radius=self.shape[0]/2)
         
     def show(self,screen:pygame.Surface) -> None:
+        # 乗組員の表示
         screen.blit(self.sur,(100,200))
 
     def movement(self,screen:pygame.Surface):

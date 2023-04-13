@@ -20,24 +20,21 @@ class WeaponBullet():
         self.is_hitscan = bool(param['is_hitscan'])
         self.ship_weapon = ship_weapon
         self.sight_vector = pygame.math.Vector2(self.ship_weapon.sight_vector[1][0]-self.ship_weapon.sight_vector[0][0],self.ship_weapon.sight_vector[1][1]-self.ship_weapon.sight_vector[0][1])
-        
         # 弾丸格納用配列の作成
         self.bullet_n = 0
         self.global_bullet_x =[0]*MAX_EXIST_BULLET
         self.global_bullet_y =[0]*MAX_EXIST_BULLET
-        self.bullet_flag =[False]*MAX_EXIST_BULLET
-        
+        self.bullet_flag =[False]*MAX_EXIST_BULLET        
         # 図形とヒットボックス作成
+        self.view_sur = pygame.Surface((self.radius*2,self.radius*2))        
+        self.hitbox_sur = pygame.Surface((self.radius*2*0.8,self.radius*2*0.8))        
         self.__create()
         
     def __create(self,color:int=(100,200,100)) -> None:
         # 弾丸の図形作成
-        self.view_sur = pygame.Surface((self.radius*2,self.radius*2))
         self.view_sur.set_colorkey((0, 0, 0))
         pygame.draw.circle(self.view_sur,color,(self.radius, self.radius),radius=self.radius)
-        
         # 弾丸のヒットボックス作成
-        self.hitbox_sur = pygame.Surface((self.radius*2*0.8,self.radius*2*0.8))
         self.hitbox_sur.set_colorkey((0,0,0))
         pygame.draw.rect(self.hitbox_sur,color,(0,0,self.radius*2*0.8,self.radius*2*0.8))
 
