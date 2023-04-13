@@ -19,11 +19,13 @@ class ShipClue():
         self.__create()
 
     def __create(self,color:int=(0,0,255)) -> None:
+        """create clue shape"""
         # 乗組員の図形作成
         self.sur.set_colorkey((0, 0, 0))
         pygame.draw.circle(self.sur,color,(self.shape[0]/2, self.shape[1]/2),radius=self.shape[0]/2)
         
     def show(self,screen:pygame.Surface) -> None:
+        """show clue shape"""
         # 乗組員の表示
         screen.blit(self.sur,(100,200))
 

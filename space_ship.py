@@ -23,11 +23,13 @@ class SpaceShip():
         self.__create()
         
     def __create(self,color:int=(0,255,0)) -> None:
+        """create space ship shape"""
         # 宇宙船の図形作成
         self.sur.set_colorkey((0, 0, 0))
         pygame.draw.rect(self.sur,color,(0, 0, self.shape[0], self.shape[1]))
 
     def show(self,screen:pygame.Surface) -> None:
+        """show space ship shape"""
         # 宇宙船の表示
         screen.blit(self.sur,(screen.get_rect().center[0] - self.sur.get_rect().center[0],screen.get_rect().center[1] - self.sur.get_rect().center[1]))
         

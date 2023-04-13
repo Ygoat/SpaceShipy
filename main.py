@@ -5,9 +5,9 @@ from ship_clue import ShipClue
 from ship_weapon import ShipWeapon
 from weapon_bullet import WeaponBullet
 from pygame.locals import *
-MAX_NUM_OF_WEAPON = 5
+MAX_NUM_OF_WEAPON:int = 5
 
-def main():
+def main() -> None:
 
     # 初期設定
     pygame.init()
@@ -54,7 +54,6 @@ def main():
         ship_clue.show(screen)
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
-        
         [weapon_bullet[i].set(time=fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
         [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
 
