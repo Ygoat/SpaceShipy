@@ -4,6 +4,7 @@ from space_ship import SpaceShip
 from ship_clue import ShipClue
 from ship_weapon import ShipWeapon
 from weapon_bullet import WeaponBullet
+from hostile_ship import HostileShip
 from pygame.locals import *
 MAX_NUM_OF_WEAPON:int = 5
 
@@ -18,22 +19,16 @@ def main() -> None:
     SCREEN = screen.get_rect()
 
     # 登場する人/物/背景の作成
-    circ_sur = pygame.Surface((20, 20))
-    circ_sur.set_colorkey((0, 0, 0))
-    circ_rect = circ_sur.get_rect()
-    circ_rect.topleft = (300, 100)
-    dx, dy = 5, 4
-    pygame.draw.circle(circ_sur, (255, 255, 255), (10, 10), 10)
-    rect_sur = pygame.Surface((100, 60))
-    pygame.draw.rect(rect_sur, (255, 0, 0), (0, 0, 100, 60))
     # 船作成
     space_ship = SpaceShip()
     # 武器作成 !!!!weapon_idは画面から選択させる予定!!!!
     ship_weapon = [ShipWeapon(space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 弾丸作成　!!!!bullet_idは画面から選択させる予定!!!!
     weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-     # 船員作成
+    # 船員作成
     ship_clue = ShipClue(ship_weapon)
+    # 敵船作成
+    hostile_ship = HostileShip(weapon_bullet)
     
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0
@@ -44,13 +39,9 @@ def main() -> None:
         screen.fill((0, 0, 0))
 
         # ゲームに登場する人/物/背景の位置Update
-        circ_rect.move_ip(dx, dy)     
-        circ_rect.clamp_ip(SCREEN)
-
         # 画面(screen)上に登場する人/物/背景を描画
-        screen.blit(circ_sur,circ_rect.topleft)
-
         space_ship.show(screen)
+        hostile_ship.move(screen)
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!弾丸発射は乗組員が兵器を操作している時だけ発射するように変更予定!!!!
@@ -58,7 +49,7 @@ def main() -> None:
         [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
         ship_clue.move(screen,fpscounter)
-        
+
         # 画面(screen)の実表示
         pygame.display.update()
 

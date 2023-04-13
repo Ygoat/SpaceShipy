@@ -32,12 +32,16 @@ class ShipClue():
     def show(self,screen:pygame.Surface) -> None:
         """show clue shape"""
         # 乗組員の表示
-        screen.blit(self.sur,(100,200))
+        screen.blit(self.sur,(100,350))
 
     def move(self,screen:pygame.Surface,time:int = 0):
+        """move ship clue and show ship clue"""
+        # !!!!blitをmove_ipに変更予定!!!!
         if time % 60 == 0:
             i = random.randrange(0,5)
             target_pos = (self.ship_weapon[i].grobal_position_x,self.ship_weapon[i].grobal_position_y)
             self.grobal_pos_x = target_pos[0] + self.ship_weapon[0].sur.get_rect().centerx - self.shape[0]/2
             self.grobal_pos_y = target_pos[1] + self.ship_weapon[0].sur.get_rect().centerx - self.shape[1]/2
         screen.blit(self.sur,(self.grobal_pos_x,self.grobal_pos_y))
+        # circ_rect.move_ip(dx, dy)     
+        # circ_rect.clamp_ip(SCREEN)
