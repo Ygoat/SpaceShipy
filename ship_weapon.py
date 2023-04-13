@@ -1,7 +1,8 @@
 import pygame
 import csv
 from space_ship import SpaceShip
-
+from const import WEAPON_STAT
+        
 class ShipWeapon():
     # パラメーターのインポート
     with open(file='./master_data/weapons.csv',mode='r',encoding='utf-8') as params_file:
@@ -10,12 +11,14 @@ class ShipWeapon():
     def __init__(self,space_ship:SpaceShip,weapon_id:int=0,pos_id:int=0) -> None:
         # パラメーターのセット
         param:dict = self.params[weapon_id]
+        self.weapon_id = weapon_id
         self.attack:float = float(param['attack'])
         self.rate:int = int(param['rate'])
         self.bullet_speed:float = float(param['bullet_speed'])
         self.bullet_type:int = int(param['bullet_type'])
-        self.space_ship:pygame.Surface = space_ship
+        self.space_ship = space_ship
         self.pos_id:int = pos_id
+        self.status = {'use':WEAPON_STAT.UNUSED,'reload':WEAPON_STAT.UNUSED}
         # 位置情報
         self.grobal_position_x:float = 0
         self.grobal_position_y:float = 0
@@ -53,8 +56,7 @@ class ShipWeapon():
         # 照準の表示
         self.grobal_sight_position_x = screen.get_rect().centerx + ship_weapon_pos[0] - ship_center[0] - self.sight_sur.get_rect().centerx
         self.grobal_sight_position_y = screen.get_rect().centery + ship_weapon_pos[1] - ship_center[1] - self.sight_sur.get_rect().centery
-        screen.blit(self.sight_sur,(self.grobal_sight_position_x,self.grobal_sight_position_y))
-        
+        screen.blit(self.sight_sur,(self.grobal_sight_position_x,self.grobal_sight_position_y))        
 
 def standard_sight_vector_line(weapon_pos:tuple,ship_center:tuple,sight_sur:pygame.Surface) -> tuple[(float,float),(float,float)]:
     # 基準となる武器の照準線のベクトル作成
