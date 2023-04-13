@@ -28,17 +28,17 @@ def main() -> None:
     pygame.draw.rect(rect_sur, (255, 0, 0), (0, 0, 100, 60))
     # 船作成
     space_ship = SpaceShip()
-    # 船員作成
-    ship_clue = ShipClue()
-    # 武器作成
-    ship_weapon = [ShipWeapon(space_ship,pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-    # 弾丸作成
-    weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
- 
+    # 武器作成 !!!!weapon_idは画面から選択させる予定!!!!
+    ship_weapon = [ShipWeapon(space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+    # 弾丸作成　!!!!bullet_idは画面から選択させる予定!!!!
+    weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+     # 船員作成
+    ship_clue = ShipClue(ship_weapon)
+    
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0
     while True:
-        fpscounter = (fpscounter + 1) % 60  
+        fpscounter = (fpscounter + 1) % 60
         
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
@@ -51,12 +51,14 @@ def main() -> None:
         screen.blit(circ_sur,circ_rect.topleft)
 
         space_ship.show(screen)
-        ship_clue.show(screen)
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
+        # !!!!弾丸発射は乗組員が兵器を操作している時だけ発射するように変更予定!!!!
         [weapon_bullet[i].set(time=fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
         [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
-
+        # !!!!乗組員は武装に向かって移動するように変更予定!!!!
+        ship_clue.move(screen,fpscounter)
+        
         # 画面(screen)の実表示
         pygame.display.update()
 
