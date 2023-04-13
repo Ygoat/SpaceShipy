@@ -7,3 +7,19 @@ class WEAPON_STAT(Enum):
     FULL = 0
     RELOAD = 1
     RELOADING = 2
+    
+class COLOR(Enum):
+    # RGBカラーコード
+    RED = (255,0,0)
+    ORANGE = (255,128,0)
+    YELLOW = (255,255,0)
+    LIGHTGREEN = (128,255,0)
+    GREEN = (0,255,0)
+    LIGHTBLUE = (0,255,255)
+    BLUE = (0,0,255)
+    PURPLE = (128,0,255)
+    PINK = (255,0,255)
+    GRAY = (128,128,128)
+    BLACK = (0,0,0)
+    WHITE = (255,255,255)
+    
