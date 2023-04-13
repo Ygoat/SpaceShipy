@@ -11,13 +11,17 @@ class ShipWeapon():
         # パラメーターのセット
         param = self.params[weapon_id]
         self.attack = float(param['attack'])
-        self.rate = float(param['rate'])
+        self.rate = int(param['rate'])
         self.bullet_speed = float(param['bullet_speed'])
         self.bullet_type = int(param['bullet_type'])
         self.space_ship = space_ship
         self.pos_id = pos_id
         
-    def create(self,color:int=(255,0,0)) -> None:
+        # 図形作成
+        self.__create()
+        self.__create_init_weapon_sight()
+        
+    def __create(self,color:int=(255,0,0)) -> None:
         # 武器の図形作成
         self.sur = pygame.Surface((20,20))
         self.sur.set_colorkey((0, 0, 0))
@@ -28,7 +32,7 @@ class ShipWeapon():
         self.grobal_position_y = screen.get_rect().center[1] + ship_weapon_pos[1] - self.sur.get_rect().center[1] - ship_center[1]
         screen.blit(self.sur,(self.grobal_position_x, self.grobal_position_y))
 
-    def weapon_sight(self,color:int=(255,0,0))  -> None:
+    def __create_init_weapon_sight(self,color:int=(255,0,0))  -> None:
         # 武器の照準
         self.sight_sur = pygame.Surface((200, 200))
         self.sight_sur.set_colorkey((0, 0, 0))
@@ -36,6 +40,13 @@ class ShipWeapon():
         self.sight_vector = standard_sight_vector_line(self.space_ship.weapon_pos[self.pos_id],self.space_ship.sur.get_rect().center,self.sight_sur)
         
         pygame.draw.line(self.sight_sur, color, self.sight_vector[0], self.sight_vector[1])
+        
+    def show_weapon_sight(self,screen:pygame.Surface,ship_center:tuple[float,float],ship_weapon_pos:tuple[float,float]) -> None:
+        # 照準の表示
+        self.grobal_sight_position_x = screen.get_rect().centerx + ship_weapon_pos[0] - ship_center[0] - self.sight_sur.get_rect().centerx
+        self.grobal_sight_position_y = screen.get_rect().centery + ship_weapon_pos[1] - ship_center[1] - self.sight_sur.get_rect().centery
+        screen.blit(self.sight_sur,(self.grobal_sight_position_x,self.grobal_sight_position_y))
+        
     
     
 

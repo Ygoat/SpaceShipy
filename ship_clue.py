@@ -14,8 +14,11 @@ class ShipClue():
         self.defence = float(param['defence'])
         self.speed = float(param['speed'])
         self.role_id = int(param['role_id'])
+        
+        # 図形の作成
+        self.__create()
 
-    def create(self,color:int=(0,0,255)) -> None:
+    def __create(self,color:int=(0,0,255)) -> None:
         # 乗組員の図形作成
         self.sur = pygame.Surface(self.shape)
         self.sur.set_colorkey((0, 0, 0))

@@ -27,7 +27,10 @@ class WeaponBullet():
         self.global_bullet_y =[0]*MAX_EXIST_BULLET
         self.bullet_flag =[False]*MAX_EXIST_BULLET
         
-    def create(self,color:int=(100,200,100)) -> None:
+        # 図形とヒットボックス作成
+        self.__create()
+        
+    def __create(self,color:int=(100,200,100)) -> None:
         # 弾丸の図形作成
         self.view_sur = pygame.Surface((self.radius*2,self.radius*2))
         self.view_sur.set_colorkey((0, 0, 0))
@@ -38,7 +41,8 @@ class WeaponBullet():
         self.hitbox_sur.set_colorkey((0,0,0))
         pygame.draw.rect(self.hitbox_sur,color,(0,0,self.radius*2*0.8,self.radius*2*0.8))
 
-    def set(self,time:float = 0):
+    def set(self,time:int = 0):
+        # 弾丸のセット
         if time % self.ship_weapon.rate == 0:
             if self.bullet_flag[self.bullet_n] == False:
                 self.bullet_flag[self.bullet_n] = True
@@ -47,7 +51,8 @@ class WeaponBullet():
             self.bullet_n = (self.bullet_n+1)%MAX_EXIST_BULLET
 
 
-    def move(self,screen:pygame.Surface):
+    def move(self,screen:pygame.Surface) -> None:
+        # 弾丸の移動
         for i in range(MAX_EXIST_BULLET):
             if self.bullet_flag[i] == True:
                 self.global_bullet_x[i] = self.global_bullet_x[i] + self.ship_weapon.bullet_speed * self.sight_vector[0]*BULLET_SPEED_COF
@@ -56,4 +61,3 @@ class WeaponBullet():
                 if self.global_bullet_x[i]<0 or self.global_bullet_y[i]<0 or self.global_bullet_x[i] > screen.get_rect().right or self.global_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
                 
-
