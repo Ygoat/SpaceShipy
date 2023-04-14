@@ -22,6 +22,7 @@ class ShipClue():
         self.space_ship = space_ship
         self.walk_speed = 5
         self.use_weapon_id = None
+        self.status = []
         # 船員の位置情報
         self.grobal_pos_x = space_ship.grobal_pos_x + space_ship.sur.get_rect().centerx - self.shape[0]/2
         self.grobal_pos_y = space_ship.grobal_pos_y + space_ship.sur.get_rect().centery - self.shape[1]/2
@@ -51,6 +52,7 @@ class ShipClue():
             self.grobal_pos_x = target_pos[0] + self.ship_weapon[0].sur.get_rect().centerx - self.shape[0]/2
             self.grobal_pos_y = target_pos[1] + self.ship_weapon[0].sur.get_rect().centerx - self.shape[1]/2
             self.__use_weapon(self.use_weapon_id)
+        self.__move_weapon_sight(self.use_weapon_id)
         screen.blit(self.sur,(self.grobal_pos_x,self.grobal_pos_y))
             # circ_rect.move_ip(dx, dy)     
             # circ_rect.clamp_ip(SCREEN)
@@ -61,7 +63,6 @@ class ShipClue():
         for i in indexes:
             if self.ship_weapon[i].status['use'] == WEAPON_STAT.UNUSED:
                 validindexes.append(i)
-        print(validindexes)
         weapon_id = random.choice(validindexes)
         return weapon_id
         
@@ -84,6 +85,9 @@ class ShipClue():
             # 次の武器へ移動
             return 1
         
-    def __move_weapon_sight(self,target,weapon_id:int):
-        # self.ship_weapon[weapon_id].sight_vector
-        pass
+    def __move_weapon_sight(self,weapon_id:int = 0,target = 0):
+        if weapon_id == None:
+            return
+        rotate_rad = 0.1
+        sight_vector = pygame.math.Vector2(self.ship_weapon[weapon_id].sight_vector[1][0] - self.ship_weapon[weapon_id].sight_vector[0][0],self.ship_weapon[weapon_id].sight_vector[1][1] - self.ship_weapon[weapon_id].sight_vector[0][1]).rotate(rotate_rad)
+        self.ship_weapon[weapon_id].sight_vector[1] = (sight_vector[0] + self.ship_weapon[weapon_id].sight_vector[0][0],sight_vector[1] + self.ship_weapon[weapon_id].sight_vector[0][1])
