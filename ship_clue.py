@@ -83,3 +83,7 @@ class ShipClue():
         if max_score == factor2_score:
             # 次の武器へ移動
             return 1
+        
+    def __move_weapon_sight(self,target,weapon_id:int):
+        # self.ship_weapon[weapon_id].sight_vector
+        pass

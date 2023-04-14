@@ -50,8 +50,9 @@ def main() -> None:
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!弾丸発射は乗組員が兵器を操作している時だけ発射するように変更予定!!!!
-        [weapon_bullet[i].set(time=fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
-        [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
+        # [weapon_bullet[i].set(time=fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
+        # [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
+        [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
         [ship_clue[i].move(screen,fpscounter,set_timer) for i in range(0,MAX_NUM_OF_CLUE)]
 
