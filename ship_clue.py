@@ -1,6 +1,7 @@
 import pygame
 import csv
 import random
+import math
 from ship_weapon import ShipWeapon
 from space_ship import SpaceShip
 from const import WEAPON_STAT
@@ -41,7 +42,7 @@ class ShipClue():
         # 乗組員の表示
         screen.blit(self.sur,(100,350))
 
-    def move(self,screen:pygame.Surface,time:int = 0,timer:int = 0):
+    def move(self,screen:pygame.Surface,time:int = 0,timer:int = 0,target_grobal_pos=(0,0)):
         """move ship clue and show ship clue"""
         # !!!!blitをmove_ipに変更予定!!!!
         if self.__decision_next_action(factor1=997,factor2=timer) == 1:
@@ -52,7 +53,7 @@ class ShipClue():
             self.grobal_pos_x = target_pos[0] + self.ship_weapon[0].sur.get_rect().centerx - self.shape[0]/2
             self.grobal_pos_y = target_pos[1] + self.ship_weapon[0].sur.get_rect().centerx - self.shape[1]/2
             self.__use_weapon(self.use_weapon_id)
-        self.__move_weapon_sight(self.use_weapon_id)
+        self.__move_weapon_sight(self.use_weapon_id,target_grobal_pos)
         screen.blit(self.sur,(self.grobal_pos_x,self.grobal_pos_y))
             # circ_rect.move_ip(dx, dy)     
             # circ_rect.clamp_ip(SCREEN)
@@ -85,9 +86,35 @@ class ShipClue():
             # 次の武器へ移動
             return 1
         
-    def __move_weapon_sight(self,weapon_id:int = 0,target = 0):
+    def __move_weapon_sight(self,weapon_id:int = 0,target_grobal_pos = (0, 0)):
         if weapon_id == None:
             return
-        rotate_rad = 0.1
-        sight_vector = pygame.math.Vector2(self.ship_weapon[weapon_id].sight_vector[1][0] - self.ship_weapon[weapon_id].sight_vector[0][0],self.ship_weapon[weapon_id].sight_vector[1][1] - self.ship_weapon[weapon_id].sight_vector[0][1]).rotate(rotate_rad)
+        weapon_to_target_vec = pygame.math.Vector2(target_grobal_pos[0] - self.ship_weapon[weapon_id].grobal_position_x_center, target_grobal_pos[1] - self.ship_weapon[weapon_id].grobal_position_x_center)
+        print('a:',self.ship_weapon[weapon_id].grobal_position_x_center)
+        sight_vector = pygame.math.Vector2(self.ship_weapon[weapon_id].sight_vector[1][0] - self.ship_weapon[weapon_id].sight_vector[0][0],self.ship_weapon[weapon_id].sight_vector[1][1] - self.ship_weapon[weapon_id].sight_vector[0][1])
+        print('b:',self.ship_weapon[weapon_id].sight_vector[0][0])
+        angle = acute_angle(sight_vector,weapon_to_target_vec)
+        rotate_rad = 3 * sigmoid_function(angle,1,500) * sign(angle)
+        sight_vector = sight_vector.rotate(rotate_rad)
         self.ship_weapon[weapon_id].sight_vector[1] = (sight_vector[0] + self.ship_weapon[weapon_id].sight_vector[0][0],sight_vector[1] + self.ship_weapon[weapon_id].sight_vector[0][1])
+
+
+def sigmoid_function(x,a=1,b=1):
+    # シグモイド関数
+    if abs(a) < 0.01:
+        y = 0
+    else:
+        y = a - 1 / (1 + math.e**-(1/b*abs(x)))
+    return y
+
+def acute_angle(base_vector:pygame.math.Vector2,target_vector:pygame.math.Vector2):
+    if base_vector.cross(target_vector) >= 0:
+        return base_vector.angle_to(target_vector)
+    if base_vector.cross(target_vector) < 0:
+        return -target_vector.angle_to(base_vector)
+    
+def sign(x):
+    if x >= 0:
+        return 1
+    else:
+        return -1

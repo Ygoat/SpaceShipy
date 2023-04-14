@@ -49,10 +49,10 @@ def main() -> None:
         hostile_ship.move(screen)
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
-        [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
-        # !!!!乗組員は武装に向かって移動するように変更予定!!!!
-        [ship_clue[i].move(screen,fpscounter,set_timer) for i in range(0,MAX_NUM_OF_CLUE)]
 
+        # !!!!乗組員は武装に向かって移動するように変更予定!!!!
+        [ship_clue[i].move(screen,fpscounter,set_timer,(hostile_ship.grobal_position_x_center,hostile_ship.grobal_position_y_center)) for i in range(0,MAX_NUM_OF_CLUE)]
+        [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
         # 画面(screen)の実表示
         pygame.display.update()
 
@@ -63,7 +63,7 @@ def main() -> None:
                 sys.exit()
 
         # 描画スピードの調整（FPS)
-        clock.tick(60)
+        clock.tick(120)
         
 if __name__ == "__main__":
     main()

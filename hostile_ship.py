@@ -19,13 +19,16 @@ class HostileShip():
         self.shape:float = float(param['shape']) 
         self.weapon_bullet:pygame.Surface = weapon_bullet
         self.pos_id:int = hostile_id
+        # 図形作成
+        self.sur:pygame.Surface = pygame.Surface((self.shape,self.shape))
+        self.__create()
         # 位置情報
         self.grobal_position_x:float = 200
         self.grobal_position_y:float = 0
-        self.dx = 5 #テスト用
-        # 図形作成
-        self.sur:pygame.Surface = pygame.Surface((20,20))
-        self.__create()
+        self.grobal_position_x_center:float = 0
+        self.grobal_position_y_center:float = 0
+        self.dx = 0.5 #テスト用
+
         
     def __create(self,color:int=(255,255,255)) -> None:
         """create hostile ship shape"""
@@ -41,5 +44,7 @@ class HostileShip():
             self.dx = -self.dx
         self.grobal_position_x = self.grobal_position_x + self.dx
         self.grobal_position_y = screen.get_rect().centery-250
+        self.grobal_position_x_center = self.grobal_position_x + self.sur.get_rect().centerx
+        self.grobal_position_y_center = self.grobal_position_y + self.sur.get_rect().centery        
         # 敵機の表示
         screen.blit(self.sur,(self.grobal_position_x, self.grobal_position_y))
