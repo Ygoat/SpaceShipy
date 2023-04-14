@@ -8,7 +8,7 @@ class WEAPON_STAT(Enum):
     RELOAD = 1
     RELOADING = 2
     
-class COLOR(Enum):
+class COLOR():
     # RGBカラーコード
     RED = (255,0,0)
     ORANGE = (255,128,0)

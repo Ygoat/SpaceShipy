@@ -6,7 +6,9 @@ from ship_weapon import ShipWeapon
 from weapon_bullet import WeaponBullet
 from hostile_ship import HostileShip
 from pygame.locals import *
+from const import *
 MAX_NUM_OF_WEAPON:int = 5
+MAX_NUM_OF_CLUE:int = 3
 
 def main() -> None:
 
@@ -26,7 +28,8 @@ def main() -> None:
     # 弾丸作成　!!!!bullet_idは画面から選択させる予定!!!!
     weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 船員作成
-    ship_clue = ShipClue(space_ship,ship_weapon)
+    clue_color_list = [COLOR.BLUE,COLOR.YELLOW,COLOR.GRAY]
+    ship_clue = [ShipClue(space_ship,ship_weapon,clue_color_list[i],clue_id=i) for i in range(0,MAX_NUM_OF_CLUE)]
     # 敵船作成
     hostile_ship = HostileShip(weapon_bullet)
     
@@ -50,7 +53,7 @@ def main() -> None:
         [weapon_bullet[i].set(time=fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
         [weapon_bullet[i].move(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
-        ship_clue.move(screen,fpscounter,set_timer)
+        [ship_clue[i].move(screen,fpscounter,set_timer) for i in range(0,MAX_NUM_OF_CLUE)]
 
         # 画面(screen)の実表示
         pygame.display.update()

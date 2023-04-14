@@ -11,7 +11,7 @@ class ShipClue():
         params = [row for row in csv.DictReader(params_file)]
     shape = (10,10)
     
-    def __init__(self,space_ship:SpaceShip,ship_weapon:tuple[ShipWeapon,...],clue_id:int=0) -> None:
+    def __init__(self,space_ship:SpaceShip,ship_weapon:tuple[ShipWeapon,...],color:tuple[int,int,int],clue_id:int=0) -> None:
         # パラメーターのセット
         param = self.params[clue_id]
         self.attack = float(param['attack'])
@@ -27,7 +27,7 @@ class ShipClue():
         self.grobal_pos_y = space_ship.grobal_pos_y + space_ship.sur.get_rect().centery - self.shape[1]/2
         # 図形の作成
         self.sur = pygame.Surface(self.shape)
-        self.__create()
+        self.__create(color)
 
     def __create(self,color:int=(0,0,255)) -> None:
         """create clue shape"""
@@ -66,9 +66,7 @@ class ShipClue():
         return weapon_id
         
     def __use_weapon(self,weapon_id:int) -> None:
-        print(self.ship_weapon[weapon_id].status['use'])
         self.ship_weapon[weapon_id].status['use'] = WEAPON_STAT.USING
-        print(self.ship_weapon[weapon_id].status['use'])
     
     def __left_weapon(self,weapon_id:int) -> None:
         if weapon_id == None:
