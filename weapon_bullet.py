@@ -3,6 +3,8 @@ import csv
 import random
 from ship_weapon import ShipWeapon
 from pygame.locals import *
+from const import *
+
 MAX_EXIST_BULLET = 500
 BULLET_SPEED_COF = 0.01
 
@@ -42,7 +44,7 @@ class WeaponBullet():
         self.hitbox_sur.set_colorkey((0,0,0))
         pygame.draw.rect(self.hitbox_sur,color,(0,0,self.radius*2*0.8,self.radius*2*0.8))
 
-    def set(self,time:int = 0):
+    def __set(self,time:int = 0):
         """set bullet array"""
         # 弾丸のセット
         if time % self.ship_weapon.rate == 0:
@@ -55,7 +57,7 @@ class WeaponBullet():
             self.bullet_n = (self.bullet_n+1)%MAX_EXIST_BULLET
 
 
-    def move(self,screen:pygame.Surface) -> None:
+    def __move(self,screen:pygame.Surface) -> None:
         """update bullet position and show bullet shape"""
         # 弾丸の移動
         for i in range(MAX_EXIST_BULLET):
@@ -65,6 +67,14 @@ class WeaponBullet():
                 screen.blit(self.view_sur,(self.global_bullet_x[i],self.global_bullet_y[i]))
                 if self.global_bullet_x[i]<0 or self.global_bullet_y[i]<0 or self.global_bullet_x[i] > screen.get_rect().right or self.global_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
+                    
+    def shot(self,screen,time):
+        if self.ship_weapon.status['use'] == WEAPON_STAT.UNUSED:
+            return
+        self.__set(time)
+        self.__move(screen)
+        
+        
         
 def spread_bullet(param_bullet_spread:float) -> float:
     """add bullet attribution:bullet spread"""
