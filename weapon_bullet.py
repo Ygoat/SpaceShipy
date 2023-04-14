@@ -73,6 +73,7 @@ class WeaponBullet():
                     
     def shot(self,screen,time):
         if self.ship_weapon.status['use'] == WEAPON_STAT.UNUSED:
+            self.__move(screen)
             return
         self.__set(time)
         self.__move(screen)
