@@ -64,6 +64,7 @@ def main() -> None:
 
         # 描画スピードの調整（FPS)
         clock.tick(120)
+        # print(clock.get_fps())
         
 if __name__ == "__main__":
     main()

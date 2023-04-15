@@ -23,7 +23,7 @@ class HostileShip():
         self.sur:pygame.Surface = pygame.Surface((self.shape,self.shape))
         self.__create()
         # 位置情報
-        self.grobal_position_x:float = 200
+        self.grobal_position_x:float = 600
         self.grobal_position_y:float = 0
         self.grobal_position_x_center:float = 0
         self.grobal_position_y_center:float = 0

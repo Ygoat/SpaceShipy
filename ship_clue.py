@@ -89,19 +89,17 @@ class ShipClue():
     def __move_weapon_sight(self,weapon_id:int = 0,target_grobal_pos = (0, 0)):
         if weapon_id == None:
             return
-        weapon_to_target_vec = pygame.math.Vector2(target_grobal_pos[0] - self.ship_weapon[weapon_id].grobal_position_x_center, target_grobal_pos[1] - self.ship_weapon[weapon_id].grobal_position_x_center)
-        print('a:',self.ship_weapon[weapon_id].grobal_position_x_center)
+        weapon_to_target_vec = pygame.math.Vector2(target_grobal_pos[0] - self.ship_weapon[weapon_id].grobal_position_x_center, target_grobal_pos[1] - self.ship_weapon[weapon_id].grobal_position_y_center)
         sight_vector = pygame.math.Vector2(self.ship_weapon[weapon_id].sight_vector[1][0] - self.ship_weapon[weapon_id].sight_vector[0][0],self.ship_weapon[weapon_id].sight_vector[1][1] - self.ship_weapon[weapon_id].sight_vector[0][1])
-        print('b:',self.ship_weapon[weapon_id].sight_vector[0][0])
         angle = acute_angle(sight_vector,weapon_to_target_vec)
-        rotate_rad = 3 * sigmoid_function(angle,1,500) * sign(angle)
+        rotate_rad = 1 * sigmoid_function(angle,1,1000) * sign(sight_vector,weapon_to_target_vec)
         sight_vector = sight_vector.rotate(rotate_rad)
         self.ship_weapon[weapon_id].sight_vector[1] = (sight_vector[0] + self.ship_weapon[weapon_id].sight_vector[0][0],sight_vector[1] + self.ship_weapon[weapon_id].sight_vector[0][1])
 
 
 def sigmoid_function(x,a=1,b=1):
     # シグモイド関数
-    if abs(a) < 0.01:
+    if abs(x) < 0.01:
         y = 0
     else:
         y = a - 1 / (1 + math.e**-(1/b*abs(x)))
@@ -111,10 +109,10 @@ def acute_angle(base_vector:pygame.math.Vector2,target_vector:pygame.math.Vector
     if base_vector.cross(target_vector) >= 0:
         return base_vector.angle_to(target_vector)
     if base_vector.cross(target_vector) < 0:
-        return -target_vector.angle_to(base_vector)
+        return -base_vector.angle_to(target_vector)
     
-def sign(x):
-    if x >= 0:
+def sign(base_vector:pygame.math.Vector2,target_vector:pygame.math.Vector2):
+    if base_vector.cross(target_vector) >= 0:
         return 1
     else:
         return -1
