@@ -48,6 +48,7 @@ class WeaponBullet():
         """set bullet array"""
         # 弾丸のセット
         if time % self.ship_weapon.rate == 0:
+            self.__update_bullet_vector()
             if self.bullet_flag[self.bullet_n] == False:
                 self.bullet_flag[self.bullet_n] = True
                 self.global_bullet_x[self.bullet_n] = self.ship_weapon.grobal_position_x + self.ship_weapon.sur.get_rect().centerx - self.view_sur.get_rect().centerx
@@ -55,7 +56,6 @@ class WeaponBullet():
                 self.spread_cof = spread_bullet(self.spread)
                 self.spread_bullet_vector[self.bullet_n] = self.sight_vector.rotate(self.spread_cof)
             self.bullet_n = (self.bullet_n+1)%MAX_EXIST_BULLET
-
 
     def __move(self,screen:pygame.Surface) -> None:
         """update bullet position and show bullet shape"""
@@ -68,12 +68,15 @@ class WeaponBullet():
                 if self.global_bullet_x[i]<0 or self.global_bullet_y[i]<0 or self.global_bullet_x[i] > screen.get_rect().right or self.global_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
                     
+    def __update_bullet_vector(self) -> None:
+        self.sight_vector = pygame.math.Vector2(self.ship_weapon.sight_vector[1][0]-self.ship_weapon.sight_vector[0][0],self.ship_weapon.sight_vector[1][1]-self.ship_weapon.sight_vector[0][1])
+                    
     def shot(self,screen,time):
         if self.ship_weapon.status['use'] == WEAPON_STAT.UNUSED:
+            self.__move(screen)
             return
         self.__set(time)
         self.__move(screen)
-        
         
         
 def spread_bullet(param_bullet_spread:float) -> float:

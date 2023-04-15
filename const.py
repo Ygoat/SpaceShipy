@@ -8,6 +8,13 @@ class WEAPON_STAT(Enum):
     RELOAD = 1
     RELOADING = 2
     
+class CLUE_STAT(Enum):
+    STAY = 0
+    MOVING = 1
+    HEALING = 2
+    RESTING = 3
+    REPARING = 4
+
 class COLOR():
     # RGBカラーコード
     RED = (255,0,0)
@@ -22,4 +29,3 @@ class COLOR():
     GRAY = (128,128,128)
     BLACK = (0,0,0)
     WHITE = (255,255,255)
-    
