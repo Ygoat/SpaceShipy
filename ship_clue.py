@@ -35,7 +35,7 @@ class ShipClue():
         """create clue shape"""
         # 乗組員の図形作成
         self.sur.set_colorkey((0, 0, 0))
-        pygame.draw.circle(self.sur,color,(self.shape[0]/2, self.shape[1]/2),radius=self.shape[0]/2)
+        self.rect = pygame.draw.circle(self.sur,color,(self.shape[0]/2, self.shape[1]/2),radius=self.shape[0]/2)
         
     def show(self,screen:pygame.Surface) -> None:
         """show clue shape"""
@@ -102,7 +102,8 @@ def sigmoid_function(x,a=1,b=1):
     if abs(x) < 0.01:
         y = 0
     else:
-        y = a - 1 / (1 + math.e**-(1/b*abs(x)))
+        # y = a - 1 / (1 + math.e**-(1/b*abs(x)))
+        y = 1
     return y
 
 def acute_angle(base_vector:pygame.math.Vector2,target_vector:pygame.math.Vector2):

@@ -39,10 +39,10 @@ class WeaponBullet():
         """create bullet shape"""
         # 弾丸の図形作成
         self.view_sur.set_colorkey((0, 0, 0))
-        pygame.draw.circle(self.view_sur,color,(self.radius, self.radius),radius=self.radius)
+        self.rect = pygame.draw.circle(self.view_sur,color,(self.radius, self.radius),radius=self.radius)
         # 弾丸のヒットボックス作成
         self.hitbox_sur.set_colorkey((0,0,0))
-        pygame.draw.rect(self.hitbox_sur,color,(0,0,self.radius*2*0.8,self.radius*2*0.8))
+        self.hitbox_rect = pygame.draw.rect(self.hitbox_sur,color,(0,0,self.radius*2*0.8,self.radius*2*0.8))
 
     def __set(self,time:int = 0):
         """set bullet array"""

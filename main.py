@@ -5,6 +5,7 @@ from ship_clue import ShipClue
 from ship_weapon import ShipWeapon
 from weapon_bullet import WeaponBullet
 from hostile_ship import HostileShip
+from battle_controller import BattleController
 from pygame.locals import *
 from const import *
 MAX_NUM_OF_WEAPON:int = 5
@@ -32,6 +33,8 @@ def main() -> None:
     ship_clue = [ShipClue(space_ship,ship_weapon,clue_color_list[i],clue_id=i) for i in range(0,MAX_NUM_OF_CLUE)]
     # 敵船作成
     hostile_ship = HostileShip(weapon_bullet)
+    # バトルコントローラー作成
+    battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet[0])
     
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0
@@ -49,10 +52,12 @@ def main() -> None:
         hostile_ship.move(screen)
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
-
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
         [ship_clue[i].move(screen,fpscounter,set_timer,(hostile_ship.grobal_position_x_center,hostile_ship.grobal_position_y_center)) for i in range(0,MAX_NUM_OF_CLUE)]
         [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
+        
+        battle_controller.hit_judge()
+        
         # 画面(screen)の実表示
         pygame.display.update()
 
