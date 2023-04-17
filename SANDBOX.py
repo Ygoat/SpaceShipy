@@ -1,33 +1,54 @@
 import pygame
+import sys
+from space_ship import SpaceShip
+from ship_clue import ShipClue
+from ship_weapon import ShipWeapon
+from weapon_bullet import WeaponBullet
+from hostile_ship import HostileShip
+from battle_controller import BattleController
+from pygame.locals import *
+from const import *
+MAX_NUM_OF_WEAPON:int = 5
+MAX_NUM_OF_CLUE:int = 3
 
-def sigmoid_function(x,a=1,b=1):
-    # シグモイド関数
-    if abs(a) < 0.01:
-        y = 0
-    else:
-        y = a - 1 / (1 + math.e**-(1/b*abs(x)))
-    return y
+def main() -> None:
 
-def acute_angle(base_vector:pygame.math.Vector2,target_vector:pygame.math.Vector2):
-    if base_vector.cross(target_vector) >= 0:
-        return base_vector.angle_to(target_vector)
-    if base_vector.cross(target_vector) < 0:
-        return -target_vector.angle_to(base_vector)
-      
-up = pygame.math.Vector2(0,-1)
-right = pygame.math.Vector2(1,0)
-rightdown = pygame.math.Vector2(1,1)
-down = pygame.math.Vector2(0,1)
-left = pygame.math.Vector2(-1,0)
-leftdown = pygame.math.Vector2(-1,1)
+    # 初期設定
+    pygame.init()
+    pygame.display.set_caption('Space Shipy')
+    clock = pygame.time.Clock()
+    
+    screen = pygame.display.set_mode((500, 500))
+    SCREEN = screen.get_rect()
+    
+    rec = pygame.Rect(0,0,100,100)
+    # pygame.Surface.blit(re)
+    drawrec = pygame.draw.rect(screen,(255,0,0),rec)
 
+    fpscounter:int = 0
+    set_timer:int = 0
+    while True:
+        fpscounter = (fpscounter + 1) % 60
+        set_timer = (set_timer + 1) % 600 #キャラ移動用のテストタイマー
+        
+        # 画面(screen)をクリア
+        screen.fill((0, 0, 0))
+        # screen.blit(screen,(0,0))
+        rec.move_ip(100,100)
+        # ゲームに登場する人/物/背景の位置Update
+ 
+        # 画面(screen)の実表示
+        pygame.display.update()
 
-cross = up.cross(rightdown)
-angle = up.angle_to(rightdown)
+        # イベント処理
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
 
-print(up.rotate(45))
-
-print(cross)
-print(angle)
-
-print(360 + right.angle_to(up))
+        # 描画スピードの調整（FPS)
+        clock.tick(60)
+        # print(clock.get_fps())
+        
+if __name__ == "__main__":
+    main()
