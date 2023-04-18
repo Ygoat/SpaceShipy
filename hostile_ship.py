@@ -38,12 +38,11 @@ class HostileShip():
         """create hostile ship shape"""
         # 敵機の図形作成
         self.sur.set_colorkey((0, 0, 0))
-        drawrect = pygame.draw.rect(self.sur,color,(0,0,self.shape,self.shape))
-        return drawrect
+        rect = pygame.draw.rect(self.sur,color,(0,0,self.shape,self.shape))
+        return rect
 
     def move(self):
         """show hostiel ship shape"""
-        print(self.rect.right,',',self.screen.get_rect().right)
         if (self.rect.right >= self.screen.get_rect().right) and (self.dx > 0):
             self.dx = -self.dx
         if (self.rect.left <= self.screen.get_rect().left) and (self.dx < 0):

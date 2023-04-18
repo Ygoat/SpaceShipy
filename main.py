@@ -25,7 +25,7 @@ def main() -> None:
     # 船作成
     space_ship = SpaceShip(screen)
     # 武器作成 !!!!weapon_idは画面から選択させる予定!!!!
-    ship_weapon = [ShipWeapon(space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+    ship_weapon = [ShipWeapon(screen,space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 弾丸作成　!!!!bullet_idは画面から選択させる予定!!!!
     weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 船員作成
@@ -50,7 +50,7 @@ def main() -> None:
         # 画面(screen)上に登場する人/物/背景を描画
         space_ship.show(screen)
         hostile_ship.move()
-        [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
+        [ship_weapon[i].show(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
         [ship_clue[i].move(screen,fpscounter,set_timer,(hostile_ship.grobal_position_x_center,hostile_ship.grobal_position_y_center)) for i in range(0,MAX_NUM_OF_CLUE)]
