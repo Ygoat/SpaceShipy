@@ -22,11 +22,12 @@ def main() -> None:
     SCREEN = screen.get_rect()
     
     # rec = pygame.Rect(0,0,100,100)
-    rec1 = pygame.Surface((100,100))
+    rec1 = pygame.Surface((50,50))
     rec2 = pygame.Surface((50,50))
     rec3 = pygame.Surface((100,100))
     # pygame.Surface.blit(re)
     drawrec1 = pygame.draw.rect(rec1,(255,0,0),(0,0,100,100))
+    drawrec1.move_ip(100,100)
     drawrec2 = pygame.draw.rect(rec2,(0,255,0),(0,0,50,50))
     drawrec3 = pygame.draw.rect(rec3,(0,0,255),(0,0,100,100))
 
@@ -40,6 +41,7 @@ def main() -> None:
         screen.fill((0, 0, 0))
 
         drawrec1.move_ip(1,1)
+        print(drawrec1.topleft) #topleftがグローバル座標となる。
         drawrec1.clamp_ip(screen.get_rect())
         drawrec2.move_ip(5,5)
         drawrec2.clamp_ip(screen.get_rect())

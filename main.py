@@ -32,7 +32,7 @@ def main() -> None:
     clue_color_list = [COLOR.BLUE,COLOR.YELLOW,COLOR.GRAY]
     ship_clue = [ShipClue(space_ship,ship_weapon,clue_color_list[i],clue_id=i) for i in range(0,MAX_NUM_OF_CLUE)]
     # 敵船作成
-    hostile_ship = HostileShip(weapon_bullet)
+    hostile_ship = HostileShip(screen,weapon_bullet)
     # バトルコントローラー作成
     battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet[0])
     
@@ -49,7 +49,7 @@ def main() -> None:
         # ゲームに登場する人/物/背景の位置Update
         # 画面(screen)上に登場する人/物/背景を描画
         space_ship.show(screen)
-        hostile_ship.move(screen)
+        hostile_ship.move()
         [ship_weapon[i].show(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
