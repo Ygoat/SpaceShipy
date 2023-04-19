@@ -31,8 +31,8 @@ class ShipClue():
         self.grobal_pos_x = space_ship.grobal_pos_x + space_ship.sur.get_rect().centerx - self.shape[0]/2
         self.grobal_pos_y = space_ship.grobal_pos_y + space_ship.sur.get_rect().centery - self.shape[1]/2
         # スクリーン上初期位置にセット
-        self.rect.move_ip(self.grobal_pos_x,self.grobal_pos_y)
-        self.rect.clamp_ip(space_ship.sur.get_rect())
+        # self.rect.move_ip(self.grobal_pos_x,self.grobal_pos_y)
+        # self.rect.clamp_ip(space_ship.sur.get_rect())
         
 
     def __create(self,color:int=(0,0,255)) -> pygame.Rect:
@@ -97,18 +97,17 @@ class ShipClue():
         weapon_to_target_vec = pygame.math.Vector2(target_grobal_pos[0] - self.ship_weapon[weapon_id].grobal_position_x_center, target_grobal_pos[1] - self.ship_weapon[weapon_id].grobal_position_y_center)
         sight_vector = pygame.math.Vector2(self.ship_weapon[weapon_id].sight_vector[1][0] - self.ship_weapon[weapon_id].sight_vector[0][0],self.ship_weapon[weapon_id].sight_vector[1][1] - self.ship_weapon[weapon_id].sight_vector[0][1])
         angle = acute_angle(sight_vector,weapon_to_target_vec)
-        rotate_rad = 1 * sigmoid_function(angle,1,1000) * sign(sight_vector,weapon_to_target_vec)
+        rotate_rad = 5 * sigmoid_function(angle,1,0.1) * sign(sight_vector,weapon_to_target_vec)
         sight_vector = sight_vector.rotate(rotate_rad)
         self.ship_weapon[weapon_id].sight_vector[1] = (sight_vector[0] + self.ship_weapon[weapon_id].sight_vector[0][0],sight_vector[1] + self.ship_weapon[weapon_id].sight_vector[0][1])
 
 
 def sigmoid_function(x,a=1,b=1):
     # シグモイド関数
-    if abs(x) < 0.01:
+    if abs(x) < 0.0001:
         y = 0
-    else:
-        # y = a - 1 / (1 + math.e**-(1/b*abs(x)))
-        y = 1
+    else:   
+        y = 2*(1 / (1 + math.e**-abs(b*x)) - 0.5)
     return y
 
 def acute_angle(base_vector:pygame.math.Vector2,target_vector:pygame.math.Vector2):
