@@ -24,23 +24,28 @@ class ShipClue():
         self.walk_speed = 5
         self.use_weapon_id = None
         self.status = []
+        # 図形の作成
+        self.sur = pygame.Surface(self.shape)
+        self.rect = self.__create(color)
         # 船員の位置情報
         self.grobal_pos_x = space_ship.grobal_pos_x + space_ship.sur.get_rect().centerx - self.shape[0]/2
         self.grobal_pos_y = space_ship.grobal_pos_y + space_ship.sur.get_rect().centery - self.shape[1]/2
-        # 図形の作成
-        self.sur = pygame.Surface(self.shape)
-        self.__create(color)
+        # スクリーン上初期位置にセット
+        self.rect.move_ip(self.grobal_pos_x,self.grobal_pos_y)
+        self.rect.clamp_ip(space_ship.sur.get_rect())
+        
 
-    def __create(self,color:int=(0,0,255)) -> None:
+    def __create(self,color:int=(0,0,255)) -> pygame.Rect:
         """create clue shape"""
         # 乗組員の図形作成
         self.sur.set_colorkey((0, 0, 0))
-        self.rect = pygame.draw.circle(self.sur,color,(self.shape[0]/2, self.shape[1]/2),radius=self.shape[0]/2)
+        rect = pygame.draw.circle(self.sur,color,(self.shape[0]/2, self.shape[1]/2),radius=self.shape[0]/2)
+        return rect
         
     def show(self,screen:pygame.Surface) -> None:
         """show clue shape"""
         # 乗組員の表示
-        screen.blit(self.sur,(100,350))
+        screen.blit(self.space_ship.sur,(100,350))
 
     def move(self,screen:pygame.Surface,time:int = 0,timer:int = 0,target_grobal_pos=(0,0)):
         """move ship clue and show ship clue"""
