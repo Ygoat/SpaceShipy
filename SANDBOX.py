@@ -71,6 +71,7 @@ def main() -> None:
         # screen.blit(rec2,(300,300))
         rec1.fill((255,0,0))        
         rec1.blit(minirec,drawminirec.topleft)
+        print(drawminirec.centerx)
         # print(drawrec1.collidelistall([drawrec2,drawrec3]))
 
         # ゲームに登場する人/物/背景の位置Update
