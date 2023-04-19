@@ -8,6 +8,7 @@ from hostile_ship import HostileShip
 from battle_controller import BattleController
 from pygame.locals import *
 from const import *
+import math
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
 
@@ -22,18 +23,25 @@ def main() -> None:
     SCREEN = screen.get_rect()
     
     # rec = pygame.Rect(0,0,100,100)
-    rec1 = pygame.Surface((50,50))
+    rec1 = pygame.Surface((100,100))
     rec2 = pygame.Surface((50,50))
     rec3 = pygame.Surface((100,100))
     rec4 = pygame.Surface((100,100))
+    minirec = pygame.Surface((30,30))
     
     # pygame.Surface.blit(re)
     drawrec1 = pygame.draw.rect(rec1,(255,0,0),(0,0,100,100))
+    drawrec1.clamp_ip(screen.get_rect())
     drawrec1.move_ip(100,100)
     drawrec2 = pygame.draw.rect(rec2,(0,255,0),(0,0,50,50))
     drawrec3 = pygame.draw.rect(rec3,(0,0,255),(0,0,100,100))
     drawrec4 = pygame.draw.line(rec4,(0,0,255),(0,0),(100,100))
+    drawminirec = pygame.draw.rect(minirec,(0,0,255),(0,0,30,30))
+    drawminirec.clamp_ip(rec1.get_rect())
 
+    for i in range(-180,180):
+        print(f'{i}:',sigmoid_function(i,1,0.1))
+    
     fpscounter:int = 0
     set_timer:int = 0
     while True:
@@ -43,21 +51,29 @@ def main() -> None:
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
 
+
         drawrec1.move_ip(1,1)
-        print(drawrec1.topleft) #topleftがグローバル座標となる。
-        drawrec1.clamp_ip(screen.get_rect())
+        # print(drawrec1.topleft) #topleftがグローバル座標となる。
+
         drawrec2.move_ip(5,5)
         drawrec2.clamp_ip(screen.get_rect())
         drawrec3.move_ip(3,3)
         drawrec3.clamp_ip(screen.get_rect())
         drawrec4.move_ip(4,4)
         drawrec4.clamp_ip(screen.get_rect())
+        drawminirec.move_ip(1,1)
+
+
         screen.blit(rec1,drawrec1.topleft)
         screen.blit(rec2,drawrec2.topleft)
         screen.blit(rec3,drawrec3.topleft)
-        screen.blit(rec4,drawrec4.topleft)
+        # screen.blit(rec4,drawrec4.topleft)
         # screen.blit(rec2,(300,300))
-        print(drawrec1.collidelistall([drawrec2,drawrec3]))
+        rec1.fill((255,0,0))        
+        rec1.blit(minirec,drawminirec.topleft)
+        print(drawminirec.centerx)
+        # print(drawrec1.collidelistall([drawrec2,drawrec3]))
+
         # ゲームに登場する人/物/背景の位置Update
 
         
@@ -75,5 +91,20 @@ def main() -> None:
         clock.tick(30)
         # print(clock.get_fps())
         
+def sigmoid_function(x,a=1,b=1000):
+    # シグモイド関数
+    if abs(x) < 0.000001:
+        y = 0
+    else:
+        # y = (math.e**abs(x) - math.e**-abs(x))/(math.e**abs(x) + math.e**-abs(x))
+        # y = abs(b*x)/(1+abs(b*x))
+        y = 2*(1 / (1 + math.e**-abs(b*x)) - 0.5)
+        # y =  (1 + math.e**-(1/b*abs(x-100)))-1/2
+        # y = 1
+    return y
+        
 if __name__ == "__main__":
     main()
+    
+    
+    

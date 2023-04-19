@@ -45,7 +45,7 @@ def main() -> None:
         
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
-
+        
         # ゲームに登場する人/物/背景の位置Update
         # 画面(screen)上に登場する人/物/背景を描画
         space_ship.show(screen)
@@ -54,8 +54,10 @@ def main() -> None:
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!
         [ship_clue[i].move(screen,fpscounter,set_timer,(hostile_ship.grobal_position_x_center,hostile_ship.grobal_position_y_center)) for i in range(0,MAX_NUM_OF_CLUE)]
+        # 宇宙船上の画面をクリア
+        space_ship.sur.fill((0,255,0))
+        [ship_clue[i].show() for i in range(0,MAX_NUM_OF_CLUE)]        
         [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
-        
         battle_controller.hit_judge()
         
         # 画面(screen)の実表示
