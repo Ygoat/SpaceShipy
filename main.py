@@ -34,7 +34,7 @@ def main() -> None:
     # 敵船作成
     hostile_ship = HostileShip(screen,weapon_bullet)
     # バトルコントローラー作成
-    battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet[1])
+    battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet)
     
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0
@@ -58,7 +58,8 @@ def main() -> None:
         space_ship.sur.fill((0,255,0))
         [ship_clue[i].show() for i in range(0,MAX_NUM_OF_CLUE)]        
         [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
-        battle_controller.hit_judge()
+        if ship_weapon[0].status['use'] == WEAPON_STAT.USING: 
+            battle_controller.hit_judge()
         
         # 画面(screen)の実表示
         pygame.display.update()

@@ -27,14 +27,14 @@ class WeaponBullet():
         self.view_sur = pygame.Surface((self.radius*2,self.radius*2))        
         self.hitbox_sur = pygame.Surface((self.radius*2*0.8,self.radius*2*0.8))        
         self.rect = self.__create()[0]
-        self.hitbox_rect = self.__create()[1]        
+        self.hitbox_rects = [self.__create()[1]] * MAX_EXIST_BULLET
         # 弾丸格納用配列の作成&弾丸情報格納
         self.bullet_n = 0
         self.grobal_bullet_x = [self.__init_grobal_pos()[0]] * MAX_EXIST_BULLET
         self.grobal_bullet_y = [self.__init_grobal_pos()[1]] * MAX_EXIST_BULLET
         self.grobal_hitbox_x = [self.__init_hitbox_grobal_pos()[0]] * MAX_EXIST_BULLET
         self.grobal_hitbox_y = [self.__init_hitbox_grobal_pos()[1]] * MAX_EXIST_BULLET
-        self.bullet_flag =[False]*MAX_EXIST_BULLET
+        self.bullet_flag = [False] * MAX_EXIST_BULLET
         self.spread_cof = 0
         self.spread_bullet_vector = [(0,0) for i in range(MAX_EXIST_BULLET)]
         # 位置情報
@@ -45,8 +45,8 @@ class WeaponBullet():
         # スクリーン上初期位置にセット
         self.rect.clamp_ip(screen.get_rect())        
         self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
-        self.hitbox_rect.clamp_ip(screen.get_rect())
-        self.hitbox_rect.move_ip(self.hitbox_grobal_position_x,self.hitbox_grobal_position_y)
+        [self.hitbox_rects[i].clamp_ip(screen.get_rect()) for i in range(0,MAX_EXIST_BULLET)]
+        [self.hitbox_rects[i].move_ip(self.hitbox_grobal_position_x,self.hitbox_grobal_position_y) for i in range(0,MAX_EXIST_BULLET)]
 
         
     def __create(self,color:int=(100,200,100)) -> tuple[pygame.Rect,pygame.Rect]:
@@ -84,6 +84,7 @@ class WeaponBullet():
                 self.grobal_bullet_y[self.bullet_n] = grobal_bullet_pos[1]
                 self.grobal_hitbox_x[self.bullet_n] = grobal_hitbox_pos[0]
                 self.grobal_hitbox_y[self.bullet_n] = grobal_hitbox_pos[1]
+                self.hitbox_rects[self.bullet_n].topleft = grobal_hitbox_pos
                 self.spread_cof = spread_bullet(self.spread)
                 self.spread_bullet_vector[self.bullet_n] = self.sight_vector.rotate(self.spread_cof)
             self.bullet_n = (self.bullet_n+1)%MAX_EXIST_BULLET
@@ -99,10 +100,12 @@ class WeaponBullet():
                 self.grobal_hitbox_y[i] = self.grobal_hitbox_y[i] + self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][1]*BULLET_SPEED_COF
                 distance_x = self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][0]*BULLET_SPEED_COF
                 distance_y = self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][1]*BULLET_SPEED_COF
-                self.rect.move_ip(distance_x,distance_y)
-                self.hitbox_rect.move_ip(distance_x,distance_y)
+                self.rect.move_ip(distance_x,distance_y) #hitboxと異なり、rect自体は１つ
+                self.hitbox_rects[i].move_ip(distance_x,distance_y) 
                 screen.blit(self.view_sur,(self.grobal_bullet_x[i],self.grobal_bullet_y[i]))
+                screen.blit(self.view_sur,(self.rect.topleft[0],self.rect.topleft[1]))
                 screen.blit(self.hitbox_sur,(self.grobal_hitbox_x[i],self.grobal_hitbox_y[i]))
+                screen.blit(self.hitbox_sur,(self.hitbox_rects[i].topleft[0],self.hitbox_rects[i].topleft[1]))
                 if self.grobal_bullet_x[i]<0 or self.grobal_bullet_y[i]<0 or self.grobal_bullet_x[i] > screen.get_rect().right or self.grobal_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
                     
