@@ -25,7 +25,7 @@ class HostileShip():
         self.rect = self.__create() 
         # 位置情報
         self.grobal_position_x:float = 600
-        self.grobal_position_y:float = 300
+        self.grobal_position_y:float = 50
         self.grobal_position_x_center:float = 0
         self.grobal_position_y_center:float = 0
         self.dx = 1 #テスト用

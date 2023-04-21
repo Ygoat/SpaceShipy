@@ -16,5 +16,5 @@ class BattleController():
         if self.hostile_ship.rect == None or self.weapon_bullet.rect == None :
             return
         pygame.Rect.collidedict
-        self.hostile_ship.rect.colliderect(self.weapon_bullet.rect)
-        print(self.hostile_ship.rect.colliderect(self.weapon_bullet.rect))
+        self.hostile_ship.rect.colliderect(self.weapon_bullet.hitbox_rect)
+        print(self.hostile_ship.rect.colliderect(self.weapon_bullet.hitbox_rect))

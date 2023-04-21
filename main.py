@@ -27,7 +27,7 @@ def main() -> None:
     # 武器作成 !!!!weapon_idは画面から選択させる予定!!!!
     ship_weapon = [ShipWeapon(screen,space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 弾丸作成　!!!!bullet_idは画面から選択させる予定!!!!
-    weapon_bullet = [WeaponBullet(ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+    weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 船員作成
     clue_color_list = [COLOR.BLUE,COLOR.YELLOW,COLOR.GRAY]
     ship_clue = [ShipClue(space_ship,ship_weapon,clue_color_list[i],clue_id=i) for i in range(0,MAX_NUM_OF_CLUE)]
