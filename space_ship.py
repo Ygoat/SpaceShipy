@@ -25,8 +25,9 @@ class SpaceShip():
         self.grobal_pos_x = screen.get_rect().centerx - self.rect.centerx
         self.grobal_pos_y = screen.get_rect().centery - self.rect.centery
         # スクリーン上初期位置にセット
-        self.rect.move_ip(self.grobal_pos_x,self.grobal_pos_y)
         self.rect.clamp_ip(screen.get_rect())
+        self.rect.move_ip(self.grobal_pos_x,self.grobal_pos_y)
+
         
     def __create(self,color:int=(0,255,0)) -> pygame.Rect:
         """create space ship shape"""

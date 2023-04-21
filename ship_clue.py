@@ -33,8 +33,9 @@ class ShipClue():
         self.ship_pos_x = space_ship.sur.get_rect().centerx - self.sur.get_rect().centerx
         self.ship_pos_y = space_ship.sur.get_rect().centery - self.sur.get_rect().centery
         # スクリーン上初期位置にセット
+        self.rect.clamp_ip(space_ship.sur.get_rect())
         self.rect.move_ip(self.ship_pos_x,self.ship_pos_y)
-        self.rect.clamp_ip(space_ship.sur.get_rect())        
+        
 
     def __create(self,color:int=(0,0,255)) -> pygame.Rect:
         """create clue shape"""

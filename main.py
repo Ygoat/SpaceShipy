@@ -34,7 +34,7 @@ def main() -> None:
     # 敵船作成
     hostile_ship = HostileShip(screen,weapon_bullet)
     # バトルコントローラー作成
-    battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet[0])
+    battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet[1])
     
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0

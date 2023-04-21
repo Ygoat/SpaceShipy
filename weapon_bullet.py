@@ -43,10 +43,11 @@ class WeaponBullet():
         self.hitbox_grobal_position_x:float = self.ship_weapon.grobal_position_x_center - self.hitbox_sur.get_rect().centerx
         self.hitbox_grobal_position_y:float = self.ship_weapon.grobal_position_y_center - self.hitbox_sur.get_rect().centery
         # スクリーン上初期位置にセット
+        self.rect.clamp_ip(screen.get_rect())        
         self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
-        self.rect.clamp_ip(screen.get_rect())
-        self.hitbox_rect.move_ip(self.hitbox_grobal_position_x,self.hitbox_grobal_position_y)
         self.hitbox_rect.clamp_ip(screen.get_rect())
+        self.hitbox_rect.move_ip(self.hitbox_grobal_position_x,self.hitbox_grobal_position_y)
+
         
     def __create(self,color:int=(100,200,100)) -> tuple[pygame.Rect,pygame.Rect]:
         """create bullet shape"""

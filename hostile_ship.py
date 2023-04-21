@@ -30,8 +30,9 @@ class HostileShip():
         self.grobal_position_y_center:float = 0
         self.dx = 1 #テスト用
         # スクリーン上初期位置にセット
-        self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
         self.rect.clamp_ip(screen.get_rect())
+        self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
+
 
         
     def __create(self,color:int=(255,255,255)) -> pygame.Rect:

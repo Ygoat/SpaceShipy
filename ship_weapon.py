@@ -35,8 +35,9 @@ class ShipWeapon():
         self.grobal_sight_position_x_center:float = 0
         self.grobal_sight_position_y_center:float = 0
         # スクリーン上初期値位置にセット
-        self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
         self.rect.clamp_ip(screen.get_rect())
+        self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
+
         
     def __create(self,color:int=(255,0,0)) -> pygame.Rect:
         """create weapon shape"""
