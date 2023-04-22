@@ -18,7 +18,7 @@ def main() -> None:
     pygame.display.set_caption('Space Shipy')
     clock = pygame.time.Clock()
     
-    screen = pygame.display.set_mode((750, 1000))
+    screen = pygame.display.set_mode((750, 950))
     SCREEN = screen.get_rect()
 
     # 登場する人/物/背景の作成

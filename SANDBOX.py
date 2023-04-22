@@ -36,8 +36,10 @@ def main() -> None:
     drawrec2 = pygame.draw.rect(rec2,(0,255,0),(0,0,50,50))
     drawrec3 = pygame.draw.rect(rec3,(0,0,255),(0,0,100,100))
     drawrec4 = pygame.draw.line(rec4,(0,0,255),(0,0),(100,100))
-    drawminirec = pygame.draw.rect(minirec,(0,0,255),(0,0,30,30))
-    drawminirec.clamp_ip(rec1.get_rect())
+    drawminirec1 = pygame.draw.rect(minirec,(0,0,255),(0,0,30,30))
+    drawminirec1.clamp_ip(rec1.get_rect())
+    drawminirec2 = pygame.draw.rect(minirec,(0,0,255),(0,0,30,30))
+    drawminirec2.clamp_ip(rec1.get_rect())
 
     for i in range(-180,180):
         print(f'{i}:',sigmoid_function(i,1,0.1))
@@ -52,6 +54,7 @@ def main() -> None:
         screen.fill((0, 0, 0))
 
 
+
         drawrec1.move_ip(1,1)
         # print(drawrec1.topleft) #topleftがグローバル座標となる。
 
@@ -61,17 +64,20 @@ def main() -> None:
         drawrec3.clamp_ip(screen.get_rect())
         drawrec4.move_ip(4,4)
         drawrec4.clamp_ip(screen.get_rect())
-        drawminirec.move_ip(1,1)
+        drawminirec1.move_ip(1,1)
+        drawminirec1.clamp_ip(rec1.get_rect())
+        drawminirec2.move_ip(1,1)
 
 
-        screen.blit(rec1,drawrec1.topleft)
+        screen.blit(rec1,(fpscounter,fpscounter))
         screen.blit(rec2,drawrec2.topleft)
         screen.blit(rec3,drawrec3.topleft)
         # screen.blit(rec4,drawrec4.topleft)
         # screen.blit(rec2,(300,300))
         rec1.fill((255,0,0))        
-        rec1.blit(minirec,drawminirec.topleft)
-        print(drawminirec.centerx)
+        rec1.blit(minirec,drawminirec2.topleft)
+        print("before clamp:",drawminirec1.centerx)
+        print("after clamp:",drawminirec2.centerx)
         # print(drawrec1.collidelistall([drawrec2,drawrec3]))
 
         # ゲームに登場する人/物/背景の位置Update

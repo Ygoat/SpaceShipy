@@ -56,7 +56,7 @@ class ShipWeapon():
     def show(self,screen:pygame.Surface) -> None:
         """show weapon shape"""
         # 武器の表示
-        screen.blit(self.sur,(self.rect.topleft[0], self.rect.topleft[1]))
+        screen.blit(self.sur,self.rect.topleft)
         
     def show_weapon_sight(self,screen:pygame.Surface,ship_center:tuple[float,float],ship_weapon_pos:tuple[float,float]) -> None:
         """show weapon sight(initial)"""

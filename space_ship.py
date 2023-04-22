@@ -40,6 +40,6 @@ class SpaceShip():
         """show space ship shape"""
         # 宇宙船の表示
         
-        screen.blit(self.sur,(self.grobal_pos_x,self.grobal_pos_y))
+        screen.blit(self.sur,self.rect.topleft)
         
         

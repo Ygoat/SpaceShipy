@@ -45,6 +45,7 @@ class WeaponBullet():
         # スクリーン上初期位置にセット
         self.rect.clamp_ip(screen.get_rect())        
         self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
+        # self.rect.topleft = (self.grobal_bullet_x,self.grobal_bullet_y)
         [self.hitbox_rects[i].clamp_ip(screen.get_rect()) for i in range(0,MAX_EXIST_BULLET)]
         [self.hitbox_rects[i].move_ip(self.hitbox_grobal_position_x,self.hitbox_grobal_position_y) for i in range(0,MAX_EXIST_BULLET)]
 
@@ -101,7 +102,8 @@ class WeaponBullet():
                 distance_x = self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][0]*BULLET_SPEED_COF
                 distance_y = self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][1]*BULLET_SPEED_COF
                 self.rect.move_ip(distance_x,distance_y) #hitboxと異なり、rect自体は１つ
-                self.hitbox_rects[i].move_ip(distance_x,distance_y) 
+                # self.hitbox_rects[i].move_ip(distance_x,distance_y)
+                self.hitbox_rects[i].topleft = (self.grobal_hitbox_x[i],self.grobal_hitbox_y[i]) 
                 screen.blit(self.view_sur,(self.grobal_bullet_x[i],self.grobal_bullet_y[i]))
                 screen.blit(self.view_sur,(self.rect.topleft[0],self.rect.topleft[1]))
                 screen.blit(self.hitbox_sur,(self.grobal_hitbox_x[i],self.grobal_hitbox_y[i]))
