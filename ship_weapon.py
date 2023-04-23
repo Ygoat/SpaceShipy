@@ -8,7 +8,7 @@ class ShipWeapon():
     with open(file='./master_data/weapons.csv',mode='r',encoding='utf-8') as params_file:
         params = [row for row in csv.DictReader(params_file)]    
     
-    def __init__(self,space_ship:SpaceShip,weapon_id:int=0,pos_id:int=0) -> None:
+    def __init__(self,screen:pygame.Surface,space_ship:SpaceShip,weapon_id:int=0,pos_id:int=0) -> None:
         # パラメーターのセット
         param:dict = self.params[weapon_id]
         self.weapon_id = weapon_id
@@ -23,39 +23,43 @@ class ShipWeapon():
         self.sur:pygame.Surface = pygame.Surface((20,20))
         self.sight_sur = pygame.Surface((200, 200))
         self.sight_vector:list[tuple[float,float],tuple[float,float]] = standard_sight_vector_line(self.space_ship.weapon_pos[self.pos_id],self.space_ship.sur.get_rect().center,self.sight_sur)
-        self.__create()
-        self.__create_init_weapon_sight()
+        self.rect = self.__create()
+        self.sight_rect = self.__create_init_weapon_sight()
         # 位置情報
-        self.grobal_position_x:float = 0
-        self.grobal_position_y:float = 0
-        self.grobal_position_x_center:float = 0
-        self.grobal_position_y_center:float = 0        
+        # self.grobal_position_x:float = space_ship.rect.topleft[0] + space_ship.weapon_pos[weapon_id][0] - self.rect.centerx
+        # self.grobal_position_y:float = space_ship.rect.topleft[1] + space_ship.weapon_pos[weapon_id][1] - self.rect.centery
+        self.grobal_position_x:float = space_ship.grobal_pos_x + space_ship.weapon_pos[weapon_id][0] - self.rect.centerx
+        self.grobal_position_y:float = space_ship.grobal_pos_y + space_ship.weapon_pos[weapon_id][1] - self.rect.centery
+        self.grobal_position_x_center:float = space_ship.grobal_pos_x + space_ship.weapon_pos[weapon_id][0]
+        self.grobal_position_y_center:float = space_ship.grobal_pos_y + space_ship.weapon_pos[weapon_id][1]
         self.grobal_sight_position_x:float = 0
         self.grobal_sight_position_y:float = 0
         self.grobal_sight_position_x_center:float = 0
-        self.grobal_sight_position_y_center:float = 0        
+        self.grobal_sight_position_y_center:float = 0
+        # スクリーン上初期値位置にセット
+        self.rect.clamp_ip(screen.get_rect())
+        # self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
+        self.rect.topleft = (self.grobal_position_x,self.grobal_position_y)
 
         
-    def __create(self,color:int=(255,0,0)) -> None:
+    def __create(self,color:int=(255,0,0)) -> pygame.Rect:
         """create weapon shape"""
         # 武器の図形作成
         self.sur.set_colorkey((0, 0, 0))
-        pygame.draw.circle(self.sur,color,(10, 10),radius=10)
-
-    def __create_init_weapon_sight(self,color:int=(255,0,0))  -> None:
+        rect = pygame.draw.circle(self.sur,color,(10, 10),radius=10)
+        return rect
+        
+    def __create_init_weapon_sight(self,color:int=(255,0,0))  -> pygame.Rect:
         """create weapon sight line"""
         # 武器の照準
         self.sight_sur.set_colorkey((0, 0, 0))
-        pygame.draw.line(self.sight_sur, color, self.sight_vector[0], self.sight_vector[1])
-
-    def show(self,screen:pygame.Surface,ship_center:tuple[float,float],ship_weapon_pos:tuple[float,float]):
+        sight_rect = pygame.draw.line(self.sight_sur, color, self.sight_vector[0], self.sight_vector[1])
+        return sight_rect
+        
+    def show(self,screen:pygame.Surface) -> None:
         """show weapon shape"""
         # 武器の表示
-        self.grobal_position_x = screen.get_rect().center[0] + ship_weapon_pos[0] - self.sur.get_rect().center[0] - ship_center[0]
-        self.grobal_position_y = screen.get_rect().center[1] + ship_weapon_pos[1] - self.sur.get_rect().center[1] - ship_center[1]
-        self.grobal_position_x_center = self.grobal_position_x + self.sur.get_rect().centerx
-        self.grobal_position_y_center = self.grobal_position_y + self.sur.get_rect().centery
-        screen.blit(self.sur,(self.grobal_position_x, self.grobal_position_y))
+        screen.blit(self.sur,self.rect.topleft)
         
     def show_weapon_sight(self,screen:pygame.Surface,ship_center:tuple[float,float],ship_weapon_pos:tuple[float,float]) -> None:
         """show weapon sight(initial)"""
