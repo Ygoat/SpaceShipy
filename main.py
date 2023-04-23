@@ -58,8 +58,7 @@ def main() -> None:
         space_ship.sur.fill((0,255,0))
         [ship_clue[i].show() for i in range(0,MAX_NUM_OF_CLUE)]        
         [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
-        if ship_weapon[0].status['use'] == WEAPON_STAT.USING: 
-            battle_controller.hit_judge()
+        battle_controller.hit_judge()
         
         # 画面(screen)の実表示
         pygame.display.update()

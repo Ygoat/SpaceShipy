@@ -59,17 +59,17 @@ def main() -> None:
         # print(drawrec1.topleft) #topleftがグローバル座標となる。
 
         drawrec2.move_ip(5,5)
-        drawrec2.clamp_ip(screen.get_rect())
+        # drawrec2.clamp_ip(screen.get_rect())
         drawrec3.move_ip(3,3)
-        drawrec3.clamp_ip(screen.get_rect())
+        # drawrec3.clamp_ip(screen.get_rect())
         drawrec4.move_ip(4,4)
-        drawrec4.clamp_ip(screen.get_rect())
+        # drawrec4.clamp_ip(screen.get_rect())
         drawminirec1.move_ip(1,1)
         drawminirec1.clamp_ip(rec1.get_rect())
         drawminirec2.move_ip(1,1)
 
 
-        screen.blit(rec1,(fpscounter,fpscounter))
+        screen.blit(rec1,drawrec1.topleft)
         screen.blit(rec2,drawrec2.topleft)
         screen.blit(rec3,drawrec3.topleft)
         # screen.blit(rec4,drawrec4.topleft)
@@ -78,7 +78,7 @@ def main() -> None:
         rec1.blit(minirec,drawminirec2.topleft)
         print("before clamp:",drawminirec1.centerx)
         print("after clamp:",drawminirec2.centerx)
-        # print(drawrec1.collidelistall([drawrec2,drawrec3]))
+        print(drawrec1.collidelistall([drawrec2,drawrec3]))
 
         # ゲームに登場する人/物/背景の位置Update
 

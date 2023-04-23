@@ -24,15 +24,14 @@ class HostileShip():
         self.sur:pygame.Surface = pygame.Surface((self.shape,self.shape))
         self.rect = self.__create() 
         # 位置情報
-        self.grobal_position_x:float = 600
+        self.grobal_position_x:float = 400
         self.grobal_position_y:float = 50
         self.grobal_position_x_center:float = 0
         self.grobal_position_y_center:float = 0
-        self.dx = 1 #テスト用
+        self.dx = 0 #テスト用
         # スクリーン上初期位置にセット
         self.rect.clamp_ip(screen.get_rect())
-        self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
-
+        self.rect.topleft = (self.grobal_position_x,self.grobal_position_y)
 
         
     def __create(self,color:int=(255,255,255)) -> pygame.Rect:
@@ -52,7 +51,6 @@ class HostileShip():
         self.grobal_position_x = self.rect.topleft[0]
         self.grobal_position_y = self.rect.topleft[1]
         self.grobal_position_x_center = self.rect.centerx
-        self.grobal_position_y_center = self.rect.centery
-        self.rect.clamp_ip(self.screen.get_rect())        
+        self.grobal_position_y_center = self.rect.centery   
         # 敵機の表示
         self.screen.blit(self.sur,self.rect.topleft)
