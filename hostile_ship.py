@@ -28,7 +28,7 @@ class HostileShip():
         self.grobal_position_y:float = 50
         self.grobal_position_x_center:float = 0
         self.grobal_position_y_center:float = 0
-        self.dx = 0 #テスト用
+        self.dx = 3 #テスト用
         # スクリーン上初期位置にセット
         self.rect.clamp_ip(screen.get_rect())
         self.rect.topleft = (self.grobal_position_x,self.grobal_position_y)
