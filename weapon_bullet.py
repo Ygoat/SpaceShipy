@@ -107,9 +107,10 @@ class WeaponBullet():
                 self.rect.move_ip(distance_x,distance_y) #hitboxと異なり、rect自体は１つ
                 self.hitbox_rects[i].topleft = (self.grobal_hitbox_x[i],self.grobal_hitbox_y[i]) 
                 screen.blit(self.view_sur,(self.grobal_bullet_x[i],self.grobal_bullet_y[i]))
-                screen.blit(self.hitbox_surs[i],(self.hitbox_rects[i].topleft[0],self.hitbox_rects[i].topleft[1]))
+                screen.blit(self.hitbox_surs[i],(self.hitbox_rects[i].topleft))
                 if self.grobal_bullet_x[i]<0 or self.grobal_bullet_y[i]<0 or self.grobal_bullet_x[i] > screen.get_rect().right or self.grobal_bullet_y[i] > screen.get_rect().bottom:
                     self.bullet_flag[i] = False
+                    self.hitbox_rects[i].topleft = self.__init_hitbox_grobal_pos()
                     
     def __update_bullet_vector(self) -> None:
         self.sight_vector = pygame.math.Vector2(self.ship_weapon.sight_vector[1][0]-self.ship_weapon.sight_vector[0][0],self.ship_weapon.sight_vector[1][1]-self.ship_weapon.sight_vector[0][1])
