@@ -4,6 +4,8 @@ import random
 from ship_weapon import ShipWeapon
 from pygame.locals import *
 from const import *
+# メモ
+# 画面範囲外に判定が残り続けるため、どうにかする。
 
 MAX_EXIST_BULLET = 500
 BULLET_SPEED_COF = 0.01
@@ -24,8 +26,7 @@ class WeaponBullet():
         self.ship_weapon = ship_weapon
         self.sight_vector = pygame.math.Vector2(self.ship_weapon.sight_vector[1][0]-self.ship_weapon.sight_vector[0][0],self.ship_weapon.sight_vector[1][1]-self.ship_weapon.sight_vector[0][1])
         # 図形とヒットボックス作成
-        self.view_sur = pygame.Surface((self.radius*2,self.radius*2))        
-        # self.hitbox_sur = pygame.Surface((self.radius*2*0.8,self.radius*2*0.8))        
+        self.view_sur = pygame.Surface((self.radius*2,self.radius*2))          
         self.hitbox_surs = [pygame.Surface((self.radius*2*0.8,self.radius*2*0.8))] * MAX_EXIST_BULLET        
         self.rect = self.__create_bullet()
         self.hitbox_rects = self.__create_hitbox()
@@ -100,17 +101,14 @@ class WeaponBullet():
             if self.bullet_flag[i] == True:
                 self.grobal_bullet_x[i] = self.grobal_bullet_x[i] + self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][0]*BULLET_SPEED_COF
                 self.grobal_bullet_y[i] = self.grobal_bullet_y[i] + self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][1]*BULLET_SPEED_COF
-                self.grobal_hitbox_x[i] = self.grobal_hitbox_x[i] + self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][0]*BULLET_SPEED_COF
-                self.grobal_hitbox_y[i] = self.grobal_hitbox_y[i] + self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][1]*BULLET_SPEED_COF
-                distance_x = self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][0]*BULLET_SPEED_COF
-                distance_y = self.ship_weapon.bullet_speed * self.spread_bullet_vector[i][1]*BULLET_SPEED_COF
-                self.rect.move_ip(distance_x,distance_y) #hitboxと異なり、rect自体は１つ
+                self.grobal_hitbox_x[i] = self.grobal_bullet_x[i] + self.view_sur.get_rect().centerx - self.hitbox_surs[i].get_rect().centerx
+                self.grobal_hitbox_y[i] = self.grobal_bullet_y[i] + self.view_sur.get_rect().centery - self.hitbox_surs[i].get_rect().centery
+                self.rect.topleft = (self.grobal_bullet_x[i],self.grobal_bullet_y[i]) #hitboxと異なり、rect自体は１つ
                 self.hitbox_rects[i].topleft = (self.grobal_hitbox_x[i],self.grobal_hitbox_y[i]) 
                 screen.blit(self.view_sur,(self.grobal_bullet_x[i],self.grobal_bullet_y[i]))
                 screen.blit(self.hitbox_surs[i],(self.hitbox_rects[i].topleft))
-                if self.grobal_bullet_x[i]<0 or self.grobal_bullet_y[i]<0 or self.grobal_bullet_x[i] > screen.get_rect().right or self.grobal_bullet_y[i] > screen.get_rect().bottom:
+                if self.grobal_bullet_x[i]+self.view_sur.get_rect().right <-10 or self.grobal_bullet_y[i] + self.view_sur.get_rect().bottom <-10 or self.grobal_bullet_x[i] > screen.get_rect().right +10 or self.grobal_bullet_y[i] > screen.get_rect().bottom +10:
                     self.bullet_flag[i] = False
-                    self.hitbox_rects[i].topleft = self.__init_hitbox_grobal_pos()
                     
     def __update_bullet_vector(self) -> None:
         self.sight_vector = pygame.math.Vector2(self.ship_weapon.sight_vector[1][0]-self.ship_weapon.sight_vector[0][0],self.ship_weapon.sight_vector[1][1]-self.ship_weapon.sight_vector[0][1])
