@@ -25,4 +25,4 @@ class BattleController():
         # print('4:',self.hostile_ship.rect.collidelistall(self.weapon_bullet[4].hitbox_rects[:]))
         
     def reduce_hp(self):
-        pass
+        self.hostile_ship.hp = self.hostile_ship.hp - 1
