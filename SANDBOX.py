@@ -12,6 +12,16 @@ import math
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
 
+
+class a():
+    def __init__(self) -> None:
+        self.name = "aa"
+        self.a = self.getA
+        
+    def getA(self):
+        return self.name[0] 
+        
+
 def main() -> None:
 
     # 初期設定

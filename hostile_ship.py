@@ -16,7 +16,8 @@ class HostileShip():
         self.rate:int = int(param['rate'])
         self.bullet_speed:float = float(param['bullet_speed'])
         self.bullet_type:int = int(param['bullet_type'])
-        self.shape:float = float(param['shape']) 
+        self.shape:float = float(param['shape'])
+        self.hp:float = float(param['hp']) 
         self.weapon_bullet:pygame.Surface = weapon_bullet
         self.pos_id:int = hostile_id
         self.screen = screen

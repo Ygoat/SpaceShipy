@@ -100,7 +100,7 @@ class ShipClue():
         weapon_to_target_vec = pygame.math.Vector2(target_grobal_pos[0] - self.ship_weapon[weapon_id].grobal_position_x_center, target_grobal_pos[1] - self.ship_weapon[weapon_id].grobal_position_y_center)
         sight_vector = pygame.math.Vector2(self.ship_weapon[weapon_id].sight_vector[1][0] - self.ship_weapon[weapon_id].sight_vector[0][0],self.ship_weapon[weapon_id].sight_vector[1][1] - self.ship_weapon[weapon_id].sight_vector[0][1])
         angle = acute_angle(sight_vector,weapon_to_target_vec)
-        rotate_rad = 10 * sigmoid_function(angle,0.1) * sign(sight_vector,weapon_to_target_vec)
+        rotate_rad = 3 * sigmoid_function(angle,0.1) * sign(sight_vector,weapon_to_target_vec)
         sight_vector = sight_vector.rotate(rotate_rad)
         self.ship_weapon[weapon_id].sight_vector[1] = (sight_vector[0] + self.ship_weapon[weapon_id].sight_vector[0][0],sight_vector[1] + self.ship_weapon[weapon_id].sight_vector[0][1])
 

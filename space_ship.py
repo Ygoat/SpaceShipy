@@ -17,6 +17,7 @@ class SpaceShip():
         self.defence = float(param['defence'])
         self.special_id = int(param['special_id'])
         self.level_max = int(param['level_max'])
+        self.hp = float(param['hp'])
         self.level_now = 0
         # 図形作成
         self.sur = pygame.Surface(self.shape)        

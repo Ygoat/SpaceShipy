@@ -24,7 +24,6 @@ def main() -> None:
     # 登場する人/物/背景の作成
     # 船作成
     space_ship = SpaceShip(screen)
-    # 武器作成 !!!!weapon_idは画面から選択させる予定!!!!
     ship_weapon = [ShipWeapon(screen,space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
     # 弾丸作成　!!!!bullet_idは画面から選択させる予定!!!!
     weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
@@ -58,7 +57,7 @@ def main() -> None:
         space_ship.sur.fill((0,255,0))
         [ship_clue[i].show() for i in range(0,MAX_NUM_OF_CLUE)]        
         [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
-        battle_controller.hit_judge()
+        battle_controller.damage_deal()
         
         # 画面(screen)の実表示
         pygame.display.update()
