@@ -48,7 +48,8 @@ def main() -> None:
         # ゲームに登場する人/物/背景の位置Update
         # 画面(screen)上に登場する人/物/背景を描画
         space_ship.show(screen)
-        hostile_ship.move()
+        if hostile_ship.status != HOSTILE_STAT.DESTROYED:
+            hostile_ship.move()
         [ship_weapon[i].show(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
         [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
         # !!!!乗組員は武装に向かって移動するように変更予定!!!!

@@ -3,6 +3,7 @@ from space_ship import SpaceShip
 from ship_clue import ShipClue
 from hostile_ship import HostileShip 
 from weapon_bullet import WeaponBullet
+from const import *
 MAX_NUM_OF_WEAPON:int = 5
 
 class BattleController():
@@ -22,17 +23,14 @@ class BattleController():
                     self.reduce_hostile_hp(hostile_damage)
                     self.weapon_bullet[i].bullet_flag[j] = False
                     self.weapon_bullet[i].reset_bullet(j)
-                
+        self.destroy_hostile_ship()
+
         # taken_bullets_idxs = self.hit_judge()
         # for i in range(0,len(taken_bullets_idxs)):
         #     if taken_bullets_idxs[i]:
         #         ship_damage = self.calc_taken_damage()
         #         self.reduce_ship_hp(ship_damage)
-        
-        
-                
-                
-        
+
     def hit_judge(self) -> None:
         if self.hostile_ship.rect == None or self.weapon_bullet[0].hitbox_rects == None :
             return
@@ -53,4 +51,6 @@ class BattleController():
     def reduce_ship_hp(self,damage:float) -> None:
         self.space_ship.hp = self.space_ship.hp - damage
     
-    
+    def destroy_hostile_ship(self):
+        if self.hostile_ship.hp < 0:
+            self.hostile_ship.status = HOSTILE_STAT.DESTROYED
