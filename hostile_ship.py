@@ -1,6 +1,7 @@
 import pygame
 import csv
 from weapon_bullet import WeaponBullet
+from const import *
 
 class HostileShip():
     # パラメーターのインポート
@@ -21,6 +22,7 @@ class HostileShip():
         self.weapon_bullet:pygame.Surface = weapon_bullet
         self.pos_id:int = hostile_id
         self.screen = screen
+        self.status = HOSTILE_STAT.MOVE
         # 図形作成
         self.sur:pygame.Surface = pygame.Surface((self.shape,self.shape))
         self.rect = self.__create() 
@@ -43,7 +45,7 @@ class HostileShip():
         return rect
 
     def move(self):
-        """show hostiel ship shape"""
+        """show hostile ship shape"""
         if (self.rect.right >= self.screen.get_rect().right) and (self.dx > 0):
             self.dx = -self.dx
         if (self.rect.left <= self.screen.get_rect().left) and (self.dx < 0):
@@ -55,3 +57,9 @@ class HostileShip():
         self.grobal_position_y_center = self.rect.centery   
         # 敵機の表示
         self.screen.blit(self.sur,self.rect.topleft)
+        
+    def destroyed(self):
+        """destroyed hostile ship"""
+        self.status = HOSTILE_STAT.DESTROYED
+            
+    

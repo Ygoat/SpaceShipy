@@ -14,6 +14,11 @@ class CLUE_STAT(Enum):
     HEALING = 2
     RESTING = 3
     REPARING = 4
+    
+class HOSTILE_STAT(Enum):
+    MOVE = 0
+    SHOOT = 1
+    DESTROYED = 2
 
 class COLOR():
     # RGBカラーコード
