@@ -9,6 +9,7 @@ from battle_controller import BattleController
 from masterdata_import import MasterImport
 from scene_manager import SceneManager
 from pygame.locals import *
+from top_menu import Topmenu
 from const import *
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
@@ -42,8 +43,11 @@ def main() -> None:
     # バトルコントローラー作成
     battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet)
     
+    # シーン作成
+    top_menu = Topmenu(screen)
+    
     # シーン切換えテスト
-    SceneManager.scene_change(SCENE.BATTLE)
+    SceneManager.scene_change(SCENE.TOP)
     print(SceneManager.scene)
     print(SceneManager.scene == SCENE.BATTLE)
     
@@ -57,22 +61,29 @@ def main() -> None:
         # 画面(screen)をクリア
         screen.fill((0, 0, 0))
         
-        # ゲームに登場する人/物/背景の位置Update
-        # 画面(screen)上に登場する人/物/背景を描画
-        space_ship.show(screen)
-        if hostile_ship.status != HOSTILE_STAT.DESTROYED:
-            hostile_ship.move()
-        [ship_weapon[i].show(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
-        [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
-        # !!!!乗組員は武装に向かって移動するように変更予定!!!!
-        [ship_clue[i].move(screen,fpscounter,set_timer,(hostile_ship.grobal_position_x_center,hostile_ship.grobal_position_y_center)) for i in range(0,MAX_NUM_OF_CLUE)]
-        # 宇宙船上の画面をクリア
-        space_ship.sur.fill((0,255,0))
-        [ship_clue[i].show() for i in range(0,MAX_NUM_OF_CLUE)]        
-        [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
-        battle_controller.damage_deal()
         
-        # 画面(screen)の実表示
+        if SceneManager.scene == SCENE.TOP:
+            top_menu.show(screen)
+            if  set_timer ==500:
+                SceneManager.scene = SCENE.BATTLE
+        
+        if SceneManager.scene == SCENE.BATTLE:
+            # ゲームに登場する人/物/背景の位置Update
+            # 画面(screen)上に登場する人/物/背景を描画
+            space_ship.show(screen)
+            if hostile_ship.status != HOSTILE_STAT.DESTROYED:
+                hostile_ship.move()
+            [ship_weapon[i].show(screen) for i in range(0,MAX_NUM_OF_WEAPON)]
+            [ship_weapon[i].show_weapon_sight(screen,space_ship.sur.get_rect().center,space_ship.weapon_pos[i]) for i in range(0,MAX_NUM_OF_WEAPON)]
+            # !!!!乗組員は武装に向かって移動するように変更予定!!!!
+            [ship_clue[i].move(screen,fpscounter,set_timer,(hostile_ship.grobal_position_x_center,hostile_ship.grobal_position_y_center)) for i in range(0,MAX_NUM_OF_CLUE)]
+            # 宇宙船上の画面をクリア
+            space_ship.sur.fill((0,255,0))
+            [ship_clue[i].show() for i in range(0,MAX_NUM_OF_CLUE)]        
+            [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
+            battle_controller.damage_deal()
+            
+            # 画面(screen)の実表示
         pygame.display.update()
 
         # イベント処理

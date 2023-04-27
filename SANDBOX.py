@@ -14,7 +14,7 @@ MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
 
 class cons():
-    class con():
+    class con(Enum):
         RED = 1
 class a():
     def __init__(self) -> None:
