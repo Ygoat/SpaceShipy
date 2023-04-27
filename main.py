@@ -10,6 +10,7 @@ from masterdata_import import MasterImport
 from scene_manager import SceneManager
 from pygame.locals import *
 from top_menu import Topmenu
+from select_ship import SelectShip
 from const import *
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
@@ -45,6 +46,7 @@ def main() -> None:
     
     # シーン作成
     top_menu = Topmenu(screen)
+    select_ship = SelectShip(screen)
     
     # シーン切換えテスト
     SceneManager.scene_change(SCENE.TOP)
@@ -66,8 +68,14 @@ def main() -> None:
                 top_menu.show(screen)
                 for event in pygame.event.get(): #イベントを取得
                     if event.type == MOUSEBUTTONDOWN:
+                        SceneManager.scene = SCENE.SHIP_SELECT
+
+            case SCENE.SHIP_SELECT: #宇宙船選択画面
+                select_ship.show(screen)
+                for event in pygame.event.get(): #イベントを取得
+                    if event.type == MOUSEBUTTONDOWN:
                         SceneManager.scene = SCENE.BATTLE
-        
+            
             case SCENE.BATTLE: #バトル画面
                 # ゲームに登場する人/物/背景の位置Update
                 # 画面(screen)上に登場する人/物/背景を描画

@@ -47,4 +47,5 @@ class SCENE(Enum):
 class TEXT():
     TITLE = '---SPACE SHIPY---'
     START_BUTTON = 'PRESS ANY KEY TO START'
+    SELECT_SHIP = 'SELECT YOUR SHIP!!'
     
