@@ -7,6 +7,7 @@ from weapon_bullet import WeaponBullet
 from hostile_ship import HostileShip
 from battle_controller import BattleController
 from masterdata_import import MasterImport
+from scene_manager import SceneManager
 from pygame.locals import *
 from const import *
 MAX_NUM_OF_WEAPON:int = 5
@@ -40,6 +41,11 @@ def main() -> None:
     hostile_ship = HostileShip(screen,weapon_bullet)
     # バトルコントローラー作成
     battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet)
+    
+    # シーン切換えテスト
+    SceneManager.scene_change(SCENE.BATTLE)
+    print(SceneManager.scene)
+    print(SceneManager.scene == SCENE.BATTLE)
     
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0

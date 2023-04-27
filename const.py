@@ -34,3 +34,12 @@ class COLOR():
     GRAY = (128,128,128)
     BLACK = (0,0,0)
     WHITE = (255,255,255)
+    
+class SCENE(Enum):
+    TOP = 0
+    SHIP_SELECT = 1
+    WEAPON_SELECT = 2
+    CLUE_SELECT = 3
+    BATTLE = 4
+    RESULT = 5
+    GAMEOVER = 6
