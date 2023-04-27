@@ -89,9 +89,9 @@ def main() -> None:
         # screen.blit(rec2,(300,300))
         rec1.fill((255,0,0))        
         rec1.blit(minirec,drawminirec2.topleft)
-        print("before clamp:",drawminirec1.centerx)
-        print("after clamp:",drawminirec2.centerx)
-        print(drawrec1.collidelistall([drawrec2,drawrec3]))
+        # print("before clamp:",drawminirec1.centerx)
+        # print("after clamp:",drawminirec2.centerx)
+        # print(drawrec1.collidelistall([drawrec2,drawrec3]))
 
         # ゲームに登場する人/物/背景の位置Update
 
@@ -106,6 +106,17 @@ def main() -> None:
                 pygame.quit()
                 sys.exit()
 
+            # マウスクリック時の動作
+            if event.type == MOUSEBUTTONDOWN:
+                x, y = event.pos
+                print("mouse clicked -> (" + str(x) + ", " + str(y) + ")")
+                
+            # マウスポインタが移動したときの動作
+            if event.type == MOUSEMOTION:
+                x, y = event.pos
+                print("mouse moved   -> (" + str(x) + ", " + str(y) + ")")
+                
+                
         # 描画スピードの調整（FPS)
         clock.tick(30)
         # print(clock.get_fps())

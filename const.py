@@ -43,3 +43,8 @@ class SCENE(Enum):
     BATTLE = 4
     RESULT = 5
     GAMEOVER = 6
+    
+class TEXT():
+    TITLE = '---SPACE SHIPY---'
+    START_BUTTON = 'PRESS ANY KEY TO START'
+    

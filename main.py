@@ -64,8 +64,9 @@ def main() -> None:
         match SceneManager.scene:
             case SCENE.TOP: #トップ画面
                 top_menu.show(screen)
-                if  set_timer ==500:
-                    SceneManager.scene = SCENE.BATTLE # 検証用に時間経過で画面が切り替わるように
+                for event in pygame.event.get(): #イベントを取得
+                    if event.type == MOUSEBUTTONDOWN:
+                        SceneManager.scene = SCENE.BATTLE
         
             case SCENE.BATTLE: #バトル画面
                 # ゲームに登場する人/物/背景の位置Update
@@ -91,6 +92,13 @@ def main() -> None:
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            # マウスクリック時の動作
+
+                
+            # # マウスポインタが移動したときの動作
+            # if event.type == MOUSEMOTION:
+            #     x, y = event.pos
+            #     print("mouse moved   -> (" + str(x) + ", " + str(y) + ")")
 
         # 描画スピードの調整（FPS)
         clock.tick(120)
