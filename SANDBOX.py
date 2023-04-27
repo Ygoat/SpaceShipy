@@ -9,10 +9,13 @@ from battle_controller import BattleController
 from pygame.locals import *
 from const import *
 import math
+from enum import Enum
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
 
-
+class cons():
+    class con():
+        RED = 1
 class a():
     def __init__(self) -> None:
         self.name = "aa"
@@ -23,7 +26,7 @@ class a():
         
 
 def main() -> None:
-
+    print(cons.con.RED)
     # 初期設定
     pygame.init()
     pygame.display.set_caption('Space Shipy')

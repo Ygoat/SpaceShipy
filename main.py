@@ -6,6 +6,7 @@ from ship_weapon import ShipWeapon
 from weapon_bullet import WeaponBullet
 from hostile_ship import HostileShip
 from battle_controller import BattleController
+from masterdata_import import MasterImport
 from pygame.locals import *
 from const import *
 MAX_NUM_OF_WEAPON:int = 5
@@ -13,14 +14,19 @@ MAX_NUM_OF_CLUE:int = 3
 
 def main() -> None:
 
-    # 初期設定
+    # 初期設定 
     pygame.init()
     pygame.display.set_caption('Space Shipy')
-    clock = pygame.time.Clock()
-    
-    screen = pygame.display.set_mode((750, 950))
-    SCREEN = screen.get_rect()
+    clock = pygame.time.Clock() #FPS
+    screen = pygame.display.set_mode((750, 950)) #描写スクリーン
 
+    # マスターデータインポート
+    bullets_params = MasterImport.csv_import("bullets")
+    clues_params = MasterImport.csv_import("clues")
+    hostiles_params = MasterImport.csv_import("hostiles")
+    ships_params = MasterImport.csv_import("ships")
+    weapons_params = MasterImport.csv_import("weapons")
+    
     # 登場する人/物/背景の作成
     # 船作成
     space_ship = SpaceShip(screen)
