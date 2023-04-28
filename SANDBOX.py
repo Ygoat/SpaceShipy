@@ -26,6 +26,10 @@ class a():
         
 
 def main() -> None:
+    
+    b={'a':1,'b':2}
+    print(len(b))
+    
     print(cons.con.RED)
     # 初期設定
     pygame.init()

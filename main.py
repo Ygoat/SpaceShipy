@@ -71,7 +71,8 @@ def main() -> None:
                         SceneManager.scene = SCENE.SHIP_SELECT
 
             case SCENE.SHIP_SELECT: #宇宙船選択画面
-                select_ship.show(screen)
+                select_ship.show_texts(screen)
+                select_ship.show_items(screen)
                 for event in pygame.event.get(): #イベントを取得
                     if event.type == MOUSEBUTTONDOWN:
                         SceneManager.scene = SCENE.BATTLE
