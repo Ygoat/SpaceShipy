@@ -75,6 +75,7 @@ def main() -> None:
                 select_ship.show_items(screen)
                 for event in pygame.event.get(): #イベントを取得
                     if event.type == MOUSEBUTTONDOWN:
+                        select_ship.select_item(event.pos)
                         SceneManager.scene = SCENE.BATTLE
             
             case SCENE.BATTLE: #バトル画面
@@ -93,7 +94,7 @@ def main() -> None:
                 [weapon_bullet[i].shot(screen,fpscounter) for i in range(0,MAX_NUM_OF_WEAPON)]
                 battle_controller.damage_deal()
             
-            # 画面(screen)の実表示
+        # 画面(screen)の実表示
         pygame.display.update()
 
         # イベント処理

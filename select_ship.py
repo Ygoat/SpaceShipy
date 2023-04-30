@@ -19,12 +19,15 @@ class SelectShip():
     def show_items(self,screen:pygame.Surface):
         screen_rect = screen.get_rect()
         init_pos = (screen_rect.left + 30,screen_rect.centery + 30)
-        for item in self.items:
-            screen.blit(item,init_pos)
+        for i in range(0,len(self.items)):
+            screen.blit(self.items[i],init_pos)
         
         
-    def select_item(self,click:pygame.event):
-        pass
+    def select_item(self,click_pos:tuple[float,float]):
+        print(click_pos)
+        print(self.items[0].get_rect().topleft)
+        is_selected = self.items[0].get_rect().collidepoint(click_pos)
+        print(is_selected)
                 
     def __create_text(self,text:str,size:int,font:str = 'hg明朝b') ->pygame.Surface:
         textfont = pygame.font.SysFont(font,size)
