@@ -75,8 +75,10 @@ def main() -> None:
                 select_ship.show_items(screen)
                 for event in pygame.event.get(): #イベントを取得
                     if event.type == MOUSEBUTTONDOWN:
-                        select_ship.select_item(event.pos)
+                        selectid = select_ship.select_item(event.pos)
                         SceneManager.scene = SCENE.BATTLE
+                        print(selectid)
+                
             
             case SCENE.BATTLE: #バトル画面
                 # ゲームに登場する人/物/背景の位置Update

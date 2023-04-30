@@ -1,6 +1,5 @@
 import pygame
 from const import *
-from scene_manager import SceneManager
 from pygame.locals import *
 class Topmenu():
     def __init__(self,screen:pygame.Surface):

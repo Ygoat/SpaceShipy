@@ -24,8 +24,18 @@ class a():
     def getA(self):
         return self.name[0] 
         
-
+def returntest():
+    a = [1,2,3]
+    b = [4,5,6]
+    return a,b
+    
 def main() -> None:
+    
+    d,c = returntest()
+    e = returntest()[0]
+    print(d,',,',c)
+    print(returntest())
+    print(e)
     
     b={'a':1,'b':2}
     print(len(b))
