@@ -10,8 +10,10 @@ from pygame.locals import *
 from const import *
 import math
 from enum import Enum
+import csv
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
+
 
 class cons():
     class con(Enum):
@@ -30,6 +32,10 @@ def returntest():
     return a,b
     
 def main() -> None:
+    
+    with open(file='./master_data/ships.csv',mode='r',encoding='utf-8') as params_file:
+        params = [row for row in csv.DictReader(params_file)]       
+    print(params[1]['speed'])
     
     d,c = returntest()
     e = returntest()[0]
