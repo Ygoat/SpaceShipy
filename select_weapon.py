@@ -4,11 +4,12 @@ from const import *
 from pygame.locals import *
 SPACE = 15
 
-class SelectShip():
+class SelectWeapon():
 
+        
     def __init__(self,screen:pygame.Surface,params:dict):
         # 位置情報
-        self.text_sur = self.__create_text(TEXT.SELECT_SHIP,80)
+        self.text_sur = self.__create_text(TEXT.SELECT_WEAPON,80)
         self.items_sur = self.__create_item(params)[0]
         self.items_rect = self.__create_item(params)[1]
         # 初期位置にセット
@@ -17,12 +18,13 @@ class SelectShip():
     def show_texts(self,screen:pygame.Surface):
         select_pos = self.__text_place_position(self.text_sur.get_rect(),(screen.get_rect().centerx,screen.get_rect().top + 100))
         screen.blit(self.text_sur,select_pos)
-
+                
     def show_items(self,screen:pygame.Surface):
         for i in range(0,len(self.items_sur)):
             screen.blit(self.items_sur[i],self.items_rect[i].topleft)
                 
     def select_item(self,click_pos:tuple[float,float]):
+        print(click_pos)
         selected_idx = [i for i in  range(0,len(self.items_rect)) if self.items_rect[i].collidepoint(click_pos)==True]            
         if selected_idx:
             return selected_idx[0]

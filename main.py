@@ -11,6 +11,7 @@ from scene_manager import SceneManager
 from pygame.locals import *
 from top_menu import Topmenu
 from select_ship import SelectShip
+from select_weapon import SelectWeapon
 from const import *
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
@@ -30,12 +31,10 @@ def main() -> None:
     ships_params = MasterImport.csv_import("ships")
     weapons_params = MasterImport.csv_import("weapons")
     
-
-
-    
     # シーン作成
     top_menu = Topmenu(screen)
-    select_ship = SelectShip(screen)
+    select_ship = SelectShip(screen,ships_params)
+    # select_weapon = SelectWeapon(screen,weapons_params)
     
     # シーン切換えテスト
     SceneManager.scene_change(SCENE.TOP)
@@ -53,13 +52,13 @@ def main() -> None:
         screen.fill((0, 0, 0))
         
         match SceneManager.scene:
-            case SCENE.TOP: #トップ画面
+            case SCENE.TOP:
                 top_menu.show(screen)
                 for event in pygame.event.get(): #イベントを取得
                     if event.type == MOUSEBUTTONDOWN:
                         SceneManager.scene = SCENE.SHIP_SELECT
 
-            case SCENE.SHIP_SELECT: #宇宙船選択画面
+            case SCENE.SHIP_SELECT:
                 select_ship.show_texts(screen)
                 select_ship.show_items(screen)
                 for event in pygame.event.get(): #イベントを取得
@@ -82,8 +81,22 @@ def main() -> None:
                             # バトルコントローラー作成
                             battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet)
                             
-                            SceneManager.scene_change(SCENE.BATTLE)
-            
+                            SceneManager.scene_change(SCENE.WEAPON_SELECT)
+                            
+            case SCENE.WEAPON_SELECT:
+                # select_weapon.show_texts(screen)
+                # select_weapon.show_items(screen)
+                for event in pygame.event.get(): #イベントを取得
+                    if event.type == MOUSEBUTTONDOWN:
+                        SceneManager.scene_change(SCENE.CLUE_SELECT)
+                        print('pass weapon select')
+
+            case SCENE.CLUE_SELECT:
+                for event in pygame.event.get(): #イベントを取得
+                    if event.type == MOUSEBUTTONDOWN:
+                        SceneManager.scene_change(SCENE.BATTLE)
+                        print('pass clue select')
+
             case SCENE.BATTLE: #バトル画面
                 # ゲームに登場する人/物/背景の位置Update
                 # 画面(screen)上に登場する人/物/背景を描画
