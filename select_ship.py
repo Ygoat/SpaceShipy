@@ -27,9 +27,12 @@ class SelectShip():
                 
     def select_item(self,click_pos:tuple[float,float]):
         print(click_pos)
-        selected_idx = [i for i in  range(0,len(self.items_rect)) if self.items_rect[i].collidepoint(click_pos)==True]
-        return selected_idx[0]
-                
+        selected_idx = [i for i in  range(0,len(self.items_rect)) if self.items_rect[i].collidepoint(click_pos)==True]            
+        if selected_idx:
+            return selected_idx[0]
+        else:
+            return None
+            
     def __create_text(self,text:str,size:int,font:str = 'hg明朝b') ->pygame.Surface:
         textfont = pygame.font.SysFont(font,size)
         text = textfont.render(text,True,COLOR.WHITE)
