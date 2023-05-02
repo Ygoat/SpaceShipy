@@ -70,16 +70,6 @@ def main() -> None:
                             # 選択した船、武器、船員の作成
                             # 船作成
                             space_ship = SpaceShip(screen,ship_param)
-                            ship_weapon = [ShipWeapon(screen,space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-                            # 弾丸作成
-                            weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-                            # 船員作成
-                            clue_color_list = [COLOR.BLUE,COLOR.YELLOW,COLOR.GRAY]
-                            ship_clue = [ShipClue(space_ship,ship_weapon,clue_color_list[i],clue_id=i) for i in range(0,MAX_NUM_OF_CLUE)]
-                            # 敵船作成
-                            hostile_ship = HostileShip(screen,weapon_bullet)
-                            # バトルコントローラー作成
-                            battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet)
                             
                             SceneManager.scene_change(SCENE.WEAPON_SELECT)
                             
@@ -87,9 +77,21 @@ def main() -> None:
                 select_weapon.show_texts(screen)
                 select_weapon.show_items(screen)
                 for event in pygame.event.get(): #イベントを取得
+                    selectid = select_weapon.select_item(event.pos)
                     if event.type == MOUSEBUTTONDOWN:
                         SceneManager.scene_change(SCENE.CLUE_SELECT)
                         print('pass weapon select')
+                        ship_weapon = [ShipWeapon(screen,space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+                        # 弾丸作成
+                        weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+                        # 船員作成
+                        clue_color_list = [COLOR.BLUE,COLOR.YELLOW,COLOR.GRAY]
+                        ship_clue = [ShipClue(space_ship,ship_weapon,clue_color_list[i],clue_id=i) for i in range(0,MAX_NUM_OF_CLUE)]
+                        # 敵船作成
+                        hostile_ship = HostileShip(screen,weapon_bullet)
+                        # バトルコントローラー作成
+                        battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet)
+                            
 
             case SCENE.CLUE_SELECT:
                 for event in pygame.event.get(): #イベントを取得
