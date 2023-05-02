@@ -40,12 +40,12 @@ class SelectWeapon():
         items_sur = [None] * len(items)
         items_rect = [None] * len(items)
         for i in range(0,len(items)):
-            sx,sy = float(items[i]['sx']),float(items[i]['sy'])
+            # sx,sy = float(items[i]['sx']),float(items[i]['sy'])
             item_sur = pygame.Surface((100,100))
             item_sur.fill(COLOR.BLUE)
-            sur_x,sur_y = item_sur.get_rect().center
+            radius = 20
             pygame.draw.rect(item_sur,COLOR.BLACK,(3,3,94,94))
-            pygame.draw.rect(item_sur,COLOR.GREEN,(sur_x - sx/12,sur_y - sy/12,sx/6, sy/6))
+            pygame.draw.circle(item_sur,COLOR.GREEN,item_sur.get_rect().center,radius)
             items_sur[i] = item_sur
             items_rect[i] = item_sur.get_rect()
         return items_sur,items_rect

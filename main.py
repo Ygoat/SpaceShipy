@@ -34,7 +34,7 @@ def main() -> None:
     # シーン作成
     top_menu = Topmenu(screen)
     select_ship = SelectShip(screen,ships_params)
-    # select_weapon = SelectWeapon(screen,weapons_params)
+    select_weapon = SelectWeapon(screen,weapons_params)
     
     # シーン切換えテスト
     SceneManager.scene_change(SCENE.TOP)
@@ -84,8 +84,8 @@ def main() -> None:
                             SceneManager.scene_change(SCENE.WEAPON_SELECT)
                             
             case SCENE.WEAPON_SELECT:
-                # select_weapon.show_texts(screen)
-                # select_weapon.show_items(screen)
+                select_weapon.show_texts(screen)
+                select_weapon.show_items(screen)
                 for event in pygame.event.get(): #イベントを取得
                     if event.type == MOUSEBUTTONDOWN:
                         SceneManager.scene_change(SCENE.CLUE_SELECT)
