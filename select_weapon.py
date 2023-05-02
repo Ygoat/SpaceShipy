@@ -24,7 +24,7 @@ class SelectWeapon():
             screen.blit(self.items_sur[i],self.items_rect[i].topleft)
                 
     def select_item(self,click_pos:tuple[float,float]):
-        print(click_pos)
+        # print(click_pos)
         selected_idx = [i for i in  range(0,len(self.items_rect)) if self.items_rect[i].collidepoint(click_pos)==True]            
         if selected_idx:
             return selected_idx[0]
