@@ -106,7 +106,6 @@ class WeaponBullet():
                 self.rect.topleft = (self.grobal_bullet_x[i],self.grobal_bullet_y[i]) #hitboxと異なり、rect自体は１つ
                 self.hitbox_rects[i].topleft = (self.grobal_hitbox_x[i],self.grobal_hitbox_y[i]) 
                 screen.blit(self.view_sur,(self.grobal_bullet_x[i],self.grobal_bullet_y[i]))
-                # screen.blit(self.hitbox_surs[i],(self.hitbox_rects[i].topleft))
                 if self.grobal_bullet_x[i]+self.view_sur.get_rect().right <-10 or self.grobal_bullet_y[i] + self.view_sur.get_rect().bottom <-10 or self.grobal_bullet_x[i] > screen.get_rect().right +10 or self.grobal_bullet_y[i] > screen.get_rect().bottom +10:
                     self.bullet_flag[i] = False
                     

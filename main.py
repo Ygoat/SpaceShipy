@@ -44,6 +44,10 @@ def main() -> None:
     # FPSカウンター（経過時間取得用）
     fpscounter:int = 0
     set_timer:int = 0
+    
+    # 武器選択数のカウント用
+    selectids = [None] * MAX_NUM_OF_WEAPON
+    select_num = 0
     while True:
         fpscounter = (fpscounter + 1) % 60
         set_timer = (set_timer + 1) % 600 #キャラ移動用のテストタイマー
@@ -60,8 +64,8 @@ def main() -> None:
 
             case SCENE.SHIP_SELECT:
                 select_ship.show_texts(screen)
-                select_ship.show_items(screen)                
-                for event in pygame.event.get(): 
+                select_ship.show_items(screen)
+                for event in pygame.event.get():
                     if event.type == MOUSEBUTTONDOWN:
                         selectid = select_ship.select_item(event.pos)
                         if selectid is not None:
@@ -74,13 +78,18 @@ def main() -> None:
                 select_weapon.show_texts(screen)
                 select_weapon.show_items(screen)
                 for event in pygame.event.get():
-                    selectid = select_weapon.select_item(event.pos)
                     if event.type == MOUSEBUTTONDOWN:
-                        # 武装生成
-                        ship_weapon = [ShipWeapon(screen,space_ship,weapon_id=selectid,pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-                        # 弾丸作成
-                        weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-                        SceneManager.scene_change(SCENE.CLUE_SELECT)
+                        selectid = select_weapon.select_item(event.pos)
+                        if selectid is not None:
+                            # 武装生成
+                            ship_weapon = [ShipWeapon(screen,space_ship,weapon_id=selectid,pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+                            # 弾丸作成
+                            weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=ship_weapon[i].bullet_type) for i in range(0,MAX_NUM_OF_WEAPON)]
+                            # 選択数のカウントアップ
+                            select_num = select_num + 1
+                            print(select_num)
+                            if select_num == 5:
+                                SceneManager.scene_change(SCENE.CLUE_SELECT)
             
             case SCENE.CLUE_SELECT:
                 for event in pygame.event.get():
