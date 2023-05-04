@@ -77,7 +77,7 @@ def main() -> None:
                     selectid = select_weapon.select_item(event.pos)
                     if event.type == MOUSEBUTTONDOWN:
                         # 武装生成
-                        ship_weapon = [ShipWeapon(screen,space_ship,pos_id=i,weapon_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+                        ship_weapon = [ShipWeapon(screen,space_ship,weapon_id=selectid,pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
                         # 弾丸作成
                         weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
                         SceneManager.scene_change(SCENE.CLUE_SELECT)
