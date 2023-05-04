@@ -39,15 +39,17 @@ class SCENE(Enum):
     TOP = 0
     SHIP_SELECT = 1
     WEAPON_SELECT = 2
-    CLUE_SELECT = 3
-    LOAD_BATTLE =4
-    BATTLE = 5
-    RESULT = 6
-    GAMEOVER = 7
+    WEAPON_SET = 3
+    CLUE_SELECT = 4
+    LOAD_BATTLE = 5
+    BATTLE = 6
+    RESULT = 7
+    GAMEOVER = 8
     
 class TEXT():
     TITLE = '---SPACE SHIPY---'
     START_BUTTON = 'PRESS ANY KEY TO START'
     SELECT_SHIP = 'SELECT SHIP!!'
     SELECT_WEAPON = 'SELECT WEAPON!!'
+    SET_WEAPON = 'SET WEAPON!!'
     

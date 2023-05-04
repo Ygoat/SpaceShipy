@@ -60,7 +60,7 @@ def main() -> None:
 
             case SCENE.SHIP_SELECT:
                 select_ship.show_texts(screen)
-                select_ship.show_items(screen)
+                select_ship.show_items(screen)                
                 for event in pygame.event.get(): 
                     if event.type == MOUSEBUTTONDOWN:
                         selectid = select_ship.select_item(event.pos)
