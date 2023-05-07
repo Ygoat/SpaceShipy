@@ -2,15 +2,16 @@ import pygame
 import csv
 from const import *
 from pygame.locals import *
+from space_ship import SpaceShip
 SPACE = 15
 
-class SelectWeapon():
+class SetWeapon():
 
-    def __init__(self,screen:pygame.Surface,params:dict):
+    def __init__(self,screen:pygame.Surface,space_ship:SpaceShip):
         # 位置情報
-        self.text_sur = self.__create_text(TEXT.SELECT_WEAPON,80)
-        self.items_sur = self.__create_item(params)[0]
-        self.items_rect = self.__create_item(params)[1]
+        self.text_sur = self.__create_text(TEXT.SET_WEAPON,80)
+        # self.items_sur = self.__create_item(space_ship.shape,space_ship.weapon_pos)[0]
+        # self.items_rect = self.__create_item(space_ship.shape,space_ship.weapon_pos)[1]
         # 初期位置にセット
         self.__set_rect(screen)
 
@@ -34,27 +35,28 @@ class SelectWeapon():
         text = textfont.render(text,True,COLOR.WHITE)
         return text
         
-    def __create_item(self,items:list[dict]) -> tuple[list[pygame.Surface],list[pygame.Rect]]:
-        items_sur = [None] * len(items)
-        items_rect = [None] * len(items)
-        for i in range(0,len(items)):
-            # sx,sy = float(items[i]['sx']),float(items[i]['sy'])
-            item_sur = pygame.Surface((100,100))
-            item_sur.fill(COLOR.BLUE)
-            radius = 20
-            pygame.draw.rect(item_sur,COLOR.BLACK,(3,3,94,94))
-            pygame.draw.circle(item_sur,COLOR.GREEN,item_sur.get_rect().center,radius)
-            items_sur[i] = item_sur
-            items_rect[i] = item_sur.get_rect()
-        return items_sur,items_rect
+    def __create_item(self,ship_shape:tuple[float,float],weapon_pos:tuple[float,float]) -> tuple[list[pygame.Surface],list[pygame.Rect]]:
+        # items_sur = [None] * len(items)
+        # items_rect = [None] * len(items)
+        # for i in range(0,len(items)):
+        #     item_sur = pygame.Surface((100,100))
+        #     item_sur.fill(COLOR.BLUE)
+        #     radius = 20
+        #     pygame.draw.rect(item_sur,COLOR.BLACK,(3,3,94,94))
+        #     pygame.draw.circle(item_sur,COLOR.GREEN,item_sur.get_rect().center,radius)
+        #     items_sur[i] = item_sur
+        #     items_rect[i] = item_sur.get_rect()
+        # return items_sur,items_rect
+        pass
     
     def __set_rect(self,screen:pygame.Surface):
-        screen_rec = screen.get_rect()
-        init_pos = [screen_rec.left + SPACE,screen_rec.centery + 30]
-        for item_rect in self.items_rect:
-            item_rect.clamp_ip(screen.get_rect())
-            item_rect.move_ip(init_pos)
-            init_pos[0] = item_rect.right + SPACE
+        # screen_rec = screen.get_rect()
+        # init_pos = [screen_rec.left + SPACE,screen_rec.centery + 30]
+        # for item_rect in self.items_rect:
+        #     item_rect.clamp_ip(screen.get_rect())
+        #     item_rect.move_ip(init_pos)
+        #     init_pos[0] = item_rect.right + SPACE
+        pass
 
 
     def __text_place_position(self,text_rec:pygame.Rect,center_pos:tuple[float,float]) -> tuple[float,float]:

@@ -12,6 +12,7 @@ from pygame.locals import *
 from top_menu import Topmenu
 from select_ship import SelectShip
 from select_weapon import SelectWeapon
+from set_weapon import SetWeapon
 from const import *
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
@@ -35,6 +36,7 @@ def main() -> None:
     top_menu = Topmenu(screen)
     select_ship = SelectShip(screen,ships_params)
     select_weapon = SelectWeapon(screen,weapons_params)
+
     
     # シーン切換えテスト
     SceneManager.scene_change(SCENE.TOP)
@@ -73,6 +75,7 @@ def main() -> None:
                             # 船作成
                             space_ship = SpaceShip(screen,ship_param)
                             SceneManager.scene_change(SCENE.WEAPON_SELECT)
+                            set_weapon = SetWeapon(screen,space_ship)
                             
             case SCENE.WEAPON_SELECT:
                 select_weapon.show_texts(screen)
@@ -89,8 +92,12 @@ def main() -> None:
                             select_num = select_num + 1
                             print(select_num)
                             if select_num == 5:
-                                SceneManager.scene_change(SCENE.CLUE_SELECT)
-            
+                                SceneManager.scene_change(SCENE.WEAPON_SET)
+
+            case SCENE.WEAPON_SET:
+                SceneManager.scene_change(SCENE.CLUE_SELECT)
+                pass
+
             case SCENE.CLUE_SELECT:
                 for event in pygame.event.get():
                     if event.type == MOUSEBUTTONDOWN:
@@ -98,7 +105,7 @@ def main() -> None:
                         clue_color_list = [COLOR.BLUE,COLOR.YELLOW,COLOR.GRAY]
                         ship_clue = [ShipClue(space_ship,ship_weapon,clue_color_list[i],clue_id=i) for i in range(0,MAX_NUM_OF_CLUE)]
                         SceneManager.scene_change(SCENE.LOAD_BATTLE)
-                        
+
             case SCENE.LOAD_BATTLE:
                 # 敵船作成
                 hostile_ship = HostileShip(screen,weapon_bullet)
