@@ -154,6 +154,7 @@ def sigmoid_function(x,a=1,b=1000):
     return y
         
 if __name__ == "__main__":
+    print(len([]))
     main()
     
     

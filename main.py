@@ -47,8 +47,8 @@ def main() -> None:
     fpscounter:int = 0
     set_timer:int = 0
     
-    # 武器選択数のカウント用
-    selectids = [None] * MAX_NUM_OF_WEAPON
+    # 武器選択時のid格納用配列
+    selectedids = []
     select_num = 0
     while True:
         fpscounter = (fpscounter + 1) % 60
@@ -84,19 +84,20 @@ def main() -> None:
                     if event.type == MOUSEBUTTONDOWN:
                         selectid = select_weapon.select_item(event.pos)
                         if selectid is not None:
-                            # 武装生成
-                            ship_weapon = [ShipWeapon(screen,space_ship,weapon_id=selectid,pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-                            # 弾丸作成
-                            weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=ship_weapon[i].bullet_type) for i in range(0,MAX_NUM_OF_WEAPON)]
-                            # 選択数のカウントアップ
+                            selectedids.append(selectid)
                             select_num = select_num + 1
                             print(select_num)
-                            if select_num == 5:
-                                SceneManager.scene_change(SCENE.WEAPON_SET)
+                            print(selectedids)
+                if len(selectedids) == MAX_NUM_OF_WEAPON:
+                    # 武装生成
+                    ship_weapon = [ShipWeapon(screen,space_ship,weapon_id=selectedids[i],pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+                    # 弾丸作成
+                    weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=ship_weapon[i].bullet_type) for i in range(0,MAX_NUM_OF_WEAPON)]
+                    # シーン変更
+                    SceneManager.scene_change(SCENE.WEAPON_SET)
 
             case SCENE.WEAPON_SET:
                 SceneManager.scene_change(SCENE.CLUE_SELECT)
-                pass
 
             case SCENE.CLUE_SELECT:
                 for event in pygame.event.get():
@@ -148,6 +149,8 @@ def main() -> None:
         # 描画スピードの調整（FPS)
         clock.tick(120)
         # print(clock.get_fps())
+        
+        
         
 if __name__ == "__main__":
     main()

@@ -18,25 +18,27 @@ class SetWeapon():
     def show_texts(self,screen:pygame.Surface):
         select_pos = self.__text_place_position(self.text_sur.get_rect(),(screen.get_rect().centerx,screen.get_rect().top + 100))
         screen.blit(self.text_sur,select_pos)
-                
+
     def show_items(self,screen:pygame.Surface):
         for i in range(0,len(self.items_sur)):
             screen.blit(self.items_sur[i],self.items_rect[i].topleft)
-                
+
     def select_item(self,click_pos:tuple[float,float]):
         selected_idx = [i for i in  range(0,len(self.items_rect)) if self.items_rect[i].collidepoint(click_pos)==True]            
         if selected_idx:
             return selected_idx[0]
         else:
             return None
-            
+
     def __create_text(self,text:str,size:int,font:str = 'hg明朝b') ->pygame.Surface:
         textfont = pygame.font.SysFont(font,size)
         text = textfont.render(text,True,COLOR.WHITE)
         return text
-        
+
     def __create_item(self,ship_shape:tuple[float,float],weapon_pos:tuple[float,float]) -> tuple[list[pygame.Surface],list[pygame.Rect]]:
-        # items_sur = [None] * len(items)
+        item_sur = pygame.Surface(ship_shape)
+        pygame.draw.rect(item_sur,COLOR.GREEN,(0,0,ship_shape[0],ship_shape[1]))
+        pygame.draw.rect(item_sur,COLOR.BLUE,(0,0,20,20))
         # items_rect = [None] * len(items)
         # for i in range(0,len(items)):
         #     item_sur = pygame.Surface((100,100))
