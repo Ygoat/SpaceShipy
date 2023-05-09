@@ -102,6 +102,7 @@ def main() -> None:
                 set_weapon.show_items(screen)
                 for event in pygame.event.get():
                     if event.type == MOUSEBUTTONDOWN:
+                        set_weapon.select_item(event.pos)
                         SceneManager.scene_change(SCENE.CLUE_SELECT)
 
             case SCENE.CLUE_SELECT:
