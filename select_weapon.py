@@ -23,7 +23,7 @@ class SelectWeapon():
             screen.blit(self.items_sur[i],self.items_rect[i].topleft)
                 
     def select_item(self,click_pos:tuple[float,float]):
-        selected_idx = [i for i in  range(0,len(self.items_rect)) if self.items_rect[i].collidepoint(click_pos)==True]            
+        selected_idx = [i for i in  range(0,len(self.items_rect)) if self.items_rect[i].collidepoint(click_pos)==True]
         if selected_idx:
             return selected_idx[0]
         else:
@@ -38,7 +38,6 @@ class SelectWeapon():
         items_sur = [None] * len(items)
         items_rect = [None] * len(items)
         for i in range(0,len(items)):
-            # sx,sy = float(items[i]['sx']),float(items[i]['sy'])
             item_sur = pygame.Surface((100,100))
             item_sur.fill(COLOR.BLUE)
             radius = 20

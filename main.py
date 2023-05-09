@@ -74,8 +74,9 @@ def main() -> None:
                             ship_param = ships_params[selectid]
                             # 船作成
                             space_ship = SpaceShip(screen,ship_param)
-                            SceneManager.scene_change(SCENE.WEAPON_SELECT)
                             set_weapon = SetWeapon(screen,space_ship)
+                            SceneManager.scene_change(SCENE.WEAPON_SELECT)
+
                             
             case SCENE.WEAPON_SELECT:
                 select_weapon.show_texts(screen)
@@ -97,7 +98,11 @@ def main() -> None:
                     SceneManager.scene_change(SCENE.WEAPON_SET)
 
             case SCENE.WEAPON_SET:
-                SceneManager.scene_change(SCENE.CLUE_SELECT)
+                set_weapon.show_texts(screen)
+                set_weapon.show_items(screen)
+                for event in pygame.event.get():
+                    if event.type == MOUSEBUTTONDOWN:
+                        SceneManager.scene_change(SCENE.CLUE_SELECT)
 
             case SCENE.CLUE_SELECT:
                 for event in pygame.event.get():
