@@ -8,6 +8,7 @@ MAX_NUM_OF_WEAPON:int = 5
 class SetWeapon():
 
     def __init__(self,screen:pygame.Surface,space_ship:SpaceShip):
+        self.item_sur_coodinate = [0,0]* MAX_NUM_OF_WEAPON 
         # 位置情報
         self.text_sur = self.__create_text(TEXT.SET_WEAPON,80)
         self.item_sur = self.__create_item(space_ship.shape,space_ship.weapon_pos)[0]
@@ -15,26 +16,25 @@ class SetWeapon():
         self.weapon_rec = self.__create_item(space_ship.shape,space_ship.weapon_pos)[2]
         # 初期位置にセット
         self.__set_rect(screen)
+        self.ishover = [False] * MAX_NUM_OF_WEAPON
 
+        
     def show_texts(self,screen:pygame.Surface):
         select_pos = self.__text_place_position(self.text_sur.get_rect(),(screen.get_rect().centerx,screen.get_rect().top + 100))
         screen.blit(self.text_sur,select_pos)
 
-    def show_items(self,screen:pygame.Surface):       
+    def show_items(self,screen:pygame.Surface):
         screen.blit(self.item_sur,(screen.get_rect().centerx - self.item_sur.get_rect().centerx, screen.get_rect().centery - self.item_sur.get_rect().centery))
-        # screen.blit(self.item_sur,(0,0))
+        hovsur = [pygame.Surface((28,28))]*MAX_NUM_OF_WEAPON
+        for i in range(0,MAX_NUM_OF_WEAPON):
+            if self.ishover[i]:
+                pygame.draw.circle(self.item_sur,COLOR.GREEN,self.item_sur_coodinate[i],14)
+            else:
+                pygame.draw.circle(self.item_sur,COLOR.BLACK,self.item_sur_coodinate[i],14)
 
     def select_item(self,click_pos:tuple[float,float]):
-        print(self.weapon_rec[0].topleft)
-        print(click_pos)
-        print(self.item_rect.topleft)
         if self.weapon_rec[0].collidepoint((click_pos[0]-self.item_rect.topleft[0],click_pos[1]-self.item_rect.topleft[1])):
             print("clicked")
-        # selected_idx = [i for i in  range(0,len(self.item_rect)) if self.item_rect.collidepoint(click_pos)==True]            
-        # if selected_idx:
-        #     return selected_idx[0]
-        # else:
-        #     return None
 
     def __create_text(self,text:str,size:int,font:str = 'hg明朝b') ->pygame.Surface:
         textfont = pygame.font.SysFont(font,size)
@@ -51,9 +51,11 @@ class SetWeapon():
         radius = 15
         weapon_rec = [None]*MAX_NUM_OF_WEAPON
         for i in range(0,MAX_NUM_OF_WEAPON):
-            wc = pygame.draw.circle(item_sur,COLOR.BLUE,(ship_rec.topleft[0]+weapon_pos[i][0],ship_rec.topleft[1]+weapon_pos[i][1]),radius)
+            self.item_sur_coodinate[i] = [ship_rec.topleft[0]+weapon_pos[i][0],ship_rec.topleft[1]+weapon_pos[i][1]]
+            wc = pygame.draw.circle(item_sur,COLOR.BLUE,self.item_sur_coodinate[i],radius)
             wc = pygame.draw.circle(pygame.Surface((30,30)),COLOR.GREEN,weapon_pos[i],15)
             wc.center = (ship_rec.topleft[0] + weapon_pos[i][0],ship_rec.topleft[1] + weapon_pos[i][1])
+            print(wc.center)
             weapon_rec[i] = wc
         item_rec = item_sur.get_rect()
         return item_sur,item_rec,weapon_rec
@@ -67,5 +69,10 @@ class SetWeapon():
         place_pos = (center_pos[0]-text_rec.centerx,center_pos[1]-text_rec.centery)
         return place_pos
     
-    def hover(self,) -> None:
-        self.weapon_rec
+    def hover(self,screen,mouse_pos:tuple[float,float]) -> None:
+        print(mouse_pos)
+        for i in range(0,MAX_NUM_OF_WEAPON):
+            print(self.weapon_rec[i].center)
+            ishov = self.weapon_rec[i].collidepoint(mouse_pos)
+            self.ishover[i] = ishov
+        
