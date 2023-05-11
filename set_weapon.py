@@ -20,7 +20,7 @@ class SetWeapon():
         select_pos = self.__text_place_position(self.text_sur.get_rect(),(screen.get_rect().centerx,screen.get_rect().top + 100))
         screen.blit(self.text_sur,select_pos)
 
-    def show_items(self,screen:pygame.Surface):
+    def show_items(self,screen:pygame.Surface):       
         screen.blit(self.item_sur,(screen.get_rect().centerx - self.item_sur.get_rect().centerx, screen.get_rect().centery - self.item_sur.get_rect().centery))
         # screen.blit(self.item_sur,(0,0))
 
