@@ -77,7 +77,7 @@ def main() -> None:
                             set_weapon = SetWeapon(screen,space_ship)
                             SceneManager.scene_change(SCENE.WEAPON_SELECT)
 
-                            
+
             case SCENE.WEAPON_SELECT:
                 select_weapon.show_texts(screen)
                 select_weapon.show_items(screen)
