@@ -16,29 +16,25 @@ class ShipWeapon():
         self.rate:int = int(param['rate'])
         self.bullet_speed:float = float(param['bullet_speed'])
         self.bullet_type:int = int(param['bullet_type'])
-        self.space_ship = space_ship
         self.pos_id:int = pos_id
         self.status = {'use':WEAPON_STAT.UNUSED,'reload':WEAPON_STAT.UNUSED}
         # 図形作成
         self.sur:pygame.Surface = pygame.Surface((20,20))
         self.sight_sur = pygame.Surface((200, 200))
-        self.sight_vector:list[tuple[float,float],tuple[float,float]] = standard_sight_vector_line(self.space_ship.weapon_pos[self.pos_id],self.space_ship.sur.get_rect().center,self.sight_sur)
+        self.sight_vector:list[tuple[float,float],tuple[float,float]] = standard_sight_vector_line(space_ship.weapon_pos[self.pos_id],space_ship.sur.get_rect().center,self.sight_sur)
         self.rect = self.__create()
         self.sight_rect = self.__create_init_weapon_sight()
         # 位置情報
-        # self.grobal_position_x:float = space_ship.rect.topleft[0] + space_ship.weapon_pos[weapon_id][0] - self.rect.centerx
-        # self.grobal_position_y:float = space_ship.rect.topleft[1] + space_ship.weapon_pos[weapon_id][1] - self.rect.centery
-        self.grobal_position_x:float = space_ship.grobal_pos_x + space_ship.weapon_pos[weapon_id][0] - self.rect.centerx
-        self.grobal_position_y:float = space_ship.grobal_pos_y + space_ship.weapon_pos[weapon_id][1] - self.rect.centery
-        self.grobal_position_x_center:float = space_ship.grobal_pos_x + space_ship.weapon_pos[weapon_id][0]
-        self.grobal_position_y_center:float = space_ship.grobal_pos_y + space_ship.weapon_pos[weapon_id][1]
+        self.grobal_position_x:float = space_ship.grobal_pos_x + space_ship.weapon_pos[pos_id][0] - self.sur.get_rect().centerx
+        self.grobal_position_y:float = space_ship.grobal_pos_y + space_ship.weapon_pos[pos_id][1] - self.sur.get_rect().centery
+        self.grobal_position_x_center:float = space_ship.grobal_pos_x + space_ship.weapon_pos[pos_id][0]
+        self.grobal_position_y_center:float = space_ship.grobal_pos_y + space_ship.weapon_pos[pos_id][1]
         self.grobal_sight_position_x:float = 0
         self.grobal_sight_position_y:float = 0
         self.grobal_sight_position_x_center:float = 0
         self.grobal_sight_position_y_center:float = 0
         # スクリーン上初期値位置にセット
         self.rect.clamp_ip(screen.get_rect())
-        # self.rect.move_ip(self.grobal_position_x,self.grobal_position_y)
         self.rect.topleft = (self.grobal_position_x,self.grobal_position_y)
 
         
