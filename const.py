@@ -14,6 +14,11 @@ class CLUE_STAT(Enum):
     HEALING = 2
     RESTING = 3
     REPARING = 4
+    
+class HOSTILE_STAT(Enum):
+    MOVE = 0
+    SHOOT = 1
+    DESTROYED = 2
 
 class COLOR():
     # RGBカラーコード
@@ -29,3 +34,22 @@ class COLOR():
     GRAY = (128,128,128)
     BLACK = (0,0,0)
     WHITE = (255,255,255)
+    
+class SCENE(Enum):
+    TOP = 0
+    SHIP_SELECT = 1
+    WEAPON_SELECT = 2
+    WEAPON_SET = 3
+    CLUE_SELECT = 4
+    LOAD_BATTLE = 5
+    BATTLE = 6
+    RESULT = 7
+    GAMEOVER = 8
+    
+class TEXT():
+    TITLE = '---SPACE SHIPY---'
+    START_BUTTON = 'PRESS ANY KEY TO START'
+    SELECT_SHIP = 'SELECT SHIP!!'
+    SELECT_WEAPON = 'SELECT WEAPON!!'
+    SET_WEAPON = 'SET WEAPON!!'
+    

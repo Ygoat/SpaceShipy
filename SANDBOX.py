@@ -9,11 +9,42 @@ from battle_controller import BattleController
 from pygame.locals import *
 from const import *
 import math
+from enum import Enum
+import csv
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
-
+class cons():
+    class con(Enum):
+        RED = 1
+class a():
+    def __init__(self) -> None:
+        self.name = "aa"
+        self.a = self.getA
+        
+    def getA(self):
+        return self.name[0] 
+        
+def returntest():
+    a = [1,2,3]
+    b = [4,5,6]
+    return a,b
+    
 def main() -> None:
-
+    
+    with open(file='./master_data/ships.csv',mode='r',encoding='utf-8') as params_file:
+        params = [row for row in csv.DictReader(params_file)]       
+    print(params[1]['speed'])
+    
+    d,c = returntest()
+    e = returntest()[0]
+    print(d,',,',c)
+    print(returntest())
+    print(e)
+    
+    b={'a':1,'b':2}
+    print(len(b))
+    
+    print(cons.con.RED)
     # 初期設定
     pygame.init()
     pygame.display.set_caption('Space Shipy')
@@ -76,9 +107,9 @@ def main() -> None:
         # screen.blit(rec2,(300,300))
         rec1.fill((255,0,0))        
         rec1.blit(minirec,drawminirec2.topleft)
-        print("before clamp:",drawminirec1.centerx)
-        print("after clamp:",drawminirec2.centerx)
-        print(drawrec1.collidelistall([drawrec2,drawrec3]))
+        # print("before clamp:",drawminirec1.centerx)
+        # print("after clamp:",drawminirec2.centerx)
+        # print(drawrec1.collidelistall([drawrec2,drawrec3]))
 
         # ゲームに登場する人/物/背景の位置Update
 
@@ -93,6 +124,17 @@ def main() -> None:
                 pygame.quit()
                 sys.exit()
 
+            # マウスクリック時の動作
+            if event.type == MOUSEBUTTONDOWN:
+                x, y = event.pos
+                print("mouse clicked -> (" + str(x) + ", " + str(y) + ")")
+                
+            # マウスポインタが移動したときの動作
+            if event.type == MOUSEMOTION:
+                x, y = event.pos
+                print("mouse moved   -> (" + str(x) + ", " + str(y) + ")")
+                
+                
         # 描画スピードの調整（FPS)
         clock.tick(30)
         # print(clock.get_fps())
@@ -110,6 +152,7 @@ def sigmoid_function(x,a=1,b=1000):
     return y
         
 if __name__ == "__main__":
+    print(len([]))
     main()
     
     
