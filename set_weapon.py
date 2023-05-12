@@ -36,6 +36,7 @@ class SetWeapon():
     def select_item(self,click_pos:tuple[float,float]):
         if self.weapon_rec[0].collidepoint(click_pos):
             print("clicked")
+        self.ishover = [False] * MAX_NUM_OF_WEAPON
 
     def __create_text(self,text:str,size:int,font:str = 'hg明朝b') ->pygame.Surface:
         textfont = pygame.font.SysFont(font,size)
@@ -54,7 +55,6 @@ class SetWeapon():
         for i in range(0,MAX_NUM_OF_WEAPON):
             self.item_sur_coodinate[i] = [ship_rec.topleft[0]+weapon_pos[i][0],ship_rec.topleft[1]+weapon_pos[i][1]]
             wc = pygame.draw.circle(item_sur,COLOR.BLUE,self.item_sur_coodinate[i],radius)
-            # wc = pygame.draw.circle(pygame.Surface((30,30)),COLOR.GREEN,weapon_pos[i],15)
             wc.center = (ship_rec.topleft[0] + weapon_pos[i][0],ship_rec.topleft[1] + weapon_pos[i][1])
             weapon_rec[i] = wc
         item_rec = item_sur.get_rect()
