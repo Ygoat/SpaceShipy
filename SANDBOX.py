@@ -13,8 +13,6 @@ from enum import Enum
 import csv
 MAX_NUM_OF_WEAPON:int = 5
 MAX_NUM_OF_CLUE:int = 3
-
-
 class cons():
     class con(Enum):
         RED = 1

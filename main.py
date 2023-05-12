@@ -36,7 +36,6 @@ def main() -> None:
     top_menu = Topmenu(screen)
     select_ship = SelectShip(screen,ships_params)
     select_weapon = SelectWeapon(screen,weapons_params)
-
     
     # シーン切換えテスト
     SceneManager.scene_change(SCENE.TOP)
@@ -77,8 +76,14 @@ def main() -> None:
                             set_weapon = SetWeapon(screen,space_ship)
                             SceneManager.scene_change(SCENE.WEAPON_SELECT)
 
-
             case SCENE.WEAPON_SELECT:
+                if len(selectedids) == MAX_NUM_OF_WEAPON:
+                    # 武装生成
+                    ship_weapon = [ShipWeapon(screen,space_ship,weapon_id=selectedids[i],pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
+                    # 弾丸作成
+                    weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=ship_weapon[i].bullet_type) for i in range(0,MAX_NUM_OF_WEAPON)]
+                    # シーン変更
+                    SceneManager.scene_change(SCENE.CLUE_SELECT)
                 select_weapon.show_texts(screen)
                 select_weapon.show_items(screen)
                 for event in pygame.event.get():
@@ -89,13 +94,8 @@ def main() -> None:
                             select_num = select_num + 1
                             print(select_num)
                             print(selectedids)
-                if len(selectedids) == MAX_NUM_OF_WEAPON:
-                    # 武装生成
-                    ship_weapon = [ShipWeapon(screen,space_ship,weapon_id=selectedids[i],pos_id=i) for i in range(0,MAX_NUM_OF_WEAPON)]
-                    # 弾丸作成
-                    weapon_bullet = [WeaponBullet(screen,ship_weapon=ship_weapon[i],bullet_id=ship_weapon[i].bullet_type) for i in range(0,MAX_NUM_OF_WEAPON)]
-                    # シーン変更
-                    SceneManager.scene_change(SCENE.WEAPON_SET)
+                            SceneManager.scene_change(SCENE.WEAPON_SET)
+
 
             case SCENE.WEAPON_SET:
                 set_weapon.show_texts(screen)
@@ -104,7 +104,7 @@ def main() -> None:
                     set_weapon.hover(screen,event.pos)
                     if event.type == MOUSEBUTTONDOWN:
                         set_weapon.select_item(event.pos)
-                        SceneManager.scene_change(SCENE.CLUE_SELECT)
+                        SceneManager.scene_change(SCENE.WEAPON_SELECT)
 
             case SCENE.CLUE_SELECT:
                 for event in pygame.event.get():
