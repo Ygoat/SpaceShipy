@@ -9,6 +9,7 @@ class SetWeapon():
 
     def __init__(self,screen:pygame.Surface,space_ship:SpaceShip):
         self.item_sur_coodinate = [0,0]* MAX_NUM_OF_WEAPON 
+        self.isset = [False]*MAX_NUM_OF_WEAPON
         # 位置情報
         self.text_sur = self.__create_text(TEXT.SET_WEAPON,80)
         self.item_sur = self.__create_item(space_ship.shape,space_ship.weapon_pos)[0]
@@ -33,7 +34,7 @@ class SetWeapon():
                 pygame.draw.circle(self.item_sur,COLOR.BLACK,self.item_sur_coodinate[i],14)
 
     def select_item(self,click_pos:tuple[float,float]):
-        if self.weapon_rec[0].collidepoint((click_pos[0]-self.item_rect.topleft[0],click_pos[1]-self.item_rect.topleft[1])):
+        if self.weapon_rec[0].collidepoint(click_pos):
             print("clicked")
 
     def __create_text(self,text:str,size:int,font:str = 'hg明朝b') ->pygame.Surface:
@@ -53,9 +54,8 @@ class SetWeapon():
         for i in range(0,MAX_NUM_OF_WEAPON):
             self.item_sur_coodinate[i] = [ship_rec.topleft[0]+weapon_pos[i][0],ship_rec.topleft[1]+weapon_pos[i][1]]
             wc = pygame.draw.circle(item_sur,COLOR.BLUE,self.item_sur_coodinate[i],radius)
-            wc = pygame.draw.circle(pygame.Surface((30,30)),COLOR.GREEN,weapon_pos[i],15)
+            # wc = pygame.draw.circle(pygame.Surface((30,30)),COLOR.GREEN,weapon_pos[i],15)
             wc.center = (ship_rec.topleft[0] + weapon_pos[i][0],ship_rec.topleft[1] + weapon_pos[i][1])
-            print(wc.center)
             weapon_rec[i] = wc
         item_rec = item_sur.get_rect()
         return item_sur,item_rec,weapon_rec
@@ -70,9 +70,10 @@ class SetWeapon():
         return place_pos
     
     def hover(self,screen,mouse_pos:tuple[float,float]) -> None:
-        print(mouse_pos)
+        # print(mouse_pos)
         for i in range(0,MAX_NUM_OF_WEAPON):
             print(self.weapon_rec[i].center)
             ishov = self.weapon_rec[i].collidepoint(mouse_pos)
+            print(ishov)
             self.ishover[i] = ishov
         

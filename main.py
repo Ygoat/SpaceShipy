@@ -120,6 +120,7 @@ def main() -> None:
                 # バトルコントローラー作成
                 battle_controller = BattleController(space_ship,ship_clue,hostile_ship,weapon_bullet)
                 SceneManager.scene_change(SCENE.BATTLE)
+                del set_weapon
 
             case SCENE.BATTLE: #バトル画面
                 # ゲームに登場する人/物/背景の位置Update
